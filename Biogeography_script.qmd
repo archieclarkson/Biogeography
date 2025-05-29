@@ -419,4 +419,26 @@ ps_merged_V4<-merge_phyloseq(ps_PRJNA329332_V4,ps_PRJNA803180_V4,ps_PRJNA805287_
 #How many ASVs and samples
 ntaxa(ps_merged_V4)
 nsamples(ps_merged_V4)
+
+#Extract metadata and export into a csv
+f<-paste(getwd(),"ps_merged_V4_metadata.csv",sep="/")
+merged_metadata<-meta(ps_merged_V4)
+write.csv(merged_metadata,file=f)
+
+#Reorder sample names by location and depth
+
+
+#Name colour palettes using this dataframe
+```
+
+## Alpha diversity
+
+```{r}
+p<-plot_richness(ps_merged_V4,measures=c("Observed","Shannon","Simpson"),x="Sample.Name",color="geo_loc_name")+
+  #scale_colour_manual("Broad Location",values=site_palette_2)+
+  #scale_fill_manual("Broad Location",values=site_palette_2)+
+  geom_point(size=3)+
+  geom_boxplot(alpha=0.8)
+print(p)
+ggsave("plots/ps_merged_V4_alpha.svg",width=400,height=400,units=c("mm"))
 ```
