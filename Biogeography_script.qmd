@@ -5,6 +5,19 @@ editor: visual
 code-fold: true
 ---
 
+### Notes/unused script
+
+```{r}
+#Identify ASVs with confidence ≤ 0.97
+#low_confidence_indices<-which(as.numeric(PRJNA329332_V4_taxonomy_df$Confidence)<=0.97)
+#Replace taxonomic assignments with "Unidentified" for those ASVs
+#taxonomy_columns<-setdiff(colnames(PRJNA329332_V4_taxonomy_df),"Confidence")
+#PRJNA329332_V4_taxonomy_df[low_confidence_indices,taxonomy_columns]<-"Unidentified"
+#Convert to matrix for phyloseq compatibility
+#PRJNA329332_V4_taxonomy_97<-as.matrix(PRJNA329332_V4_taxonomy_df)
+#Count number of unidentified sequences...
+```
+
 ## Set working directory
 
 ```{r}
@@ -217,4 +230,50 @@ remove_phyloseq_tree <- function(ps) {
     sample_data(ps)
   )
 }
+```
+
+## Importing PRJNAs as separate phyloseq objects
+
+### PRJNA329332
+
+```{r}
+#Read in OTU table
+PRJNA329332_V4_otu_table=read.csv("data/PRJNA329332/V4_18S_PRJNA329332_table.csv",sep=",",row.names=1,na.strings="")
+PRJNA329332_V4_otu_table=as.matrix(PRJNA329332_V4_otu_table)
+
+#Read in taxonomy
+PRJNA329332_V4_taxonomy=read.csv("data/PRJNA329332/V4_18S-PRJNA329332-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+PRJNA329332_V4_taxonomy_df<-as.data.frame(PRJNA329332_V4_taxonomy)
+#Filter out low confidence assignments
+PRJNA329332_V4_taxonomy_97_df<-PRJNA329332_V4_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+PRJNA329332_V4_taxonomy_97=as.matrix(PRJNA329332_V4_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+PRJNA329332_V4_metadata=read.csv("data/PRJNA329332/V4_18S_PRJNA329332_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_PRJNA329332_V4=otu_table(PRJNA329332_V4_otu_table,taxa_are_rows=TRUE)
+TAX_PRJNA329332_V4=tax_table(PRJNA329332_V4_taxonomy_97)
+META_PRJNA329332_V4=sample_data(PRJNA329332_V4_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_PRJNA329332_V4)
+sample_names(META_PRJNA329332_V4)
+
+#Merge into one PhyloSeq object
+ps_PRJNA329332_V4=phyloseq(OTU_PRJNA329332_V4,TAX_PRJNA329332_V4,META_PRJNA329332_V4)
+ps_PRJNA329332_V4
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_PRJNA329332_V4)[!is.na(tax_table(ps_PRJNA329332_V4)[,"Supergroup"])]
+ps_PRJNA329332_V4<-prune_taxa(keep_taxa,ps_PRJNA329332_V4)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA329332_"
+old_names<-taxa_names(ps_PRJNA329332_V4)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_PRJNA329332_V4)<-new_names
+otu_table(ps_PRJNA329332_V4)<-otu_table(ps_PRJNA329332_V4)[new_names,]
+tax_table(ps_PRJNA329332_V4)<-tax_table(ps_PRJNA329332_V4)[new_names,]
 ```
