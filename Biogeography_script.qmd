@@ -277,3 +277,146 @@ taxa_names(ps_PRJNA329332_V4)<-new_names
 otu_table(ps_PRJNA329332_V4)<-otu_table(ps_PRJNA329332_V4)[new_names,]
 tax_table(ps_PRJNA329332_V4)<-tax_table(ps_PRJNA329332_V4)[new_names,]
 ```
+
+### PRJNA803180
+
+```{r}
+#Read in OTU table
+PRJNA803180_V4_otu_table=read.csv("data/PRJNA803180/V4_18S_PRJNA803180_table.csv",sep=",",row.names=1,na.strings="")
+PRJNA803180_V4_otu_table=as.matrix(PRJNA803180_V4_otu_table)
+
+#Read in taxonomy
+PRJNA803180_V4_taxonomy=read.csv("data/PRJNA803180/V4_18S-PRJNA803180-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+PRJNA803180_V4_taxonomy_df<-as.data.frame(PRJNA803180_V4_taxonomy)
+#Filter out low confidence assignments
+PRJNA803180_V4_taxonomy_97_df<-PRJNA803180_V4_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+PRJNA803180_V4_taxonomy_97=as.matrix(PRJNA803180_V4_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+PRJNA803180_V4_metadata=read.csv("data/PRJNA803180/V4_18S_PRJNA803180_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_PRJNA803180_V4=otu_table(PRJNA803180_V4_otu_table,taxa_are_rows=TRUE)
+TAX_PRJNA803180_V4=tax_table(PRJNA803180_V4_taxonomy_97)
+META_PRJNA803180_V4=sample_data(PRJNA803180_V4_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_PRJNA803180_V4)
+sample_names(META_PRJNA803180_V4)
+
+#Merge into one PhyloSeq object
+ps_PRJNA803180_V4=phyloseq(OTU_PRJNA803180_V4,TAX_PRJNA803180_V4,META_PRJNA803180_V4)
+ps_PRJNA803180_V4
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_PRJNA803180_V4)[!is.na(tax_table(ps_PRJNA803180_V4)[,"Supergroup"])]
+ps_PRJNA803180_V4<-prune_taxa(keep_taxa,ps_PRJNA803180_V4)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA803180_"
+old_names<-taxa_names(ps_PRJNA803180_V4)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_PRJNA803180_V4)<-new_names
+otu_table(ps_PRJNA803180_V4)<-otu_table(ps_PRJNA803180_V4)[new_names,]
+tax_table(ps_PRJNA803180_V4)<-tax_table(ps_PRJNA803180_V4)[new_names,]
+```
+
+### PRJNA805287
+
+```{r}
+#Read in OTU table
+PRJNA805287_V4_otu_table=read.csv("data/PRJNA805287/V4_18S_PRJNA805287_table.csv",sep=",",row.names=1,na.strings="")
+PRJNA805287_V4_otu_table=as.matrix(PRJNA805287_V4_otu_table)
+
+#Read in taxonomy
+PRJNA805287_V4_taxonomy=read.csv("data/PRJNA805287/V4_18S-PRJNA805287-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+PRJNA805287_V4_taxonomy_df<-as.data.frame(PRJNA805287_V4_taxonomy)
+#Filter out low confidence assignments
+PRJNA805287_V4_taxonomy_97_df<-PRJNA805287_V4_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+PRJNA805287_V4_taxonomy_97=as.matrix(PRJNA805287_V4_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+PRJNA805287_V4_metadata=read.csv("data/PRJNA805287/V4_18S_PRJNA805287_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_PRJNA805287_V4=otu_table(PRJNA805287_V4_otu_table,taxa_are_rows=TRUE)
+TAX_PRJNA805287_V4=tax_table(PRJNA805287_V4_taxonomy_97)
+META_PRJNA805287_V4=sample_data(PRJNA805287_V4_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_PRJNA805287_V4)
+sample_names(META_PRJNA805287_V4)
+
+#Merge into one PhyloSeq object
+ps_PRJNA805287_V4=phyloseq(OTU_PRJNA805287_V4,TAX_PRJNA805287_V4,META_PRJNA805287_V4)
+ps_PRJNA805287_V4
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_PRJNA805287_V4)[!is.na(tax_table(ps_PRJNA805287_V4)[,"Supergroup"])]
+ps_PRJNA805287_V4<-prune_taxa(keep_taxa,ps_PRJNA805287_V4)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA805287_"
+old_names<-taxa_names(ps_PRJNA805287_V4)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_PRJNA805287_V4)<-new_names
+otu_table(ps_PRJNA805287_V4)<-otu_table(ps_PRJNA805287_V4)[new_names,]
+tax_table(ps_PRJNA805287_V4)<-tax_table(ps_PRJNA805287_V4)[new_names,]
+```
+
+### PRJNA838732
+
+```{r}
+#Read in OTU table
+PRJNA838732_V4_otu_table=read.csv("data/PRJNA838732/V4_18S_PRJNA838732_table.csv",sep=",",row.names=1,na.strings="")
+PRJNA838732_V4_otu_table=as.matrix(PRJNA838732_V4_otu_table)
+
+#Read in taxonomy
+PRJNA838732_V4_taxonomy=read.csv("data/PRJNA838732/V4_18S-PRJNA838732-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+PRJNA838732_V4_taxonomy_df<-as.data.frame(PRJNA838732_V4_taxonomy)
+#Filter out low confidence assignments
+PRJNA838732_V4_taxonomy_97_df<-PRJNA838732_V4_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+PRJNA838732_V4_taxonomy_97=as.matrix(PRJNA838732_V4_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+PRJNA838732_V4_metadata=read.csv("data/PRJNA838732/V4_18S_PRJNA838732_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_PRJNA838732_V4=otu_table(PRJNA838732_V4_otu_table,taxa_are_rows=TRUE)
+TAX_PRJNA838732_V4=tax_table(PRJNA838732_V4_taxonomy_97)
+META_PRJNA838732_V4=sample_data(PRJNA838732_V4_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_PRJNA838732_V4)
+sample_names(META_PRJNA838732_V4)
+
+#Merge into one PhyloSeq object
+ps_PRJNA838732_V4=phyloseq(OTU_PRJNA838732_V4,TAX_PRJNA838732_V4,META_PRJNA838732_V4)
+ps_PRJNA838732_V4
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_PRJNA838732_V4)[!is.na(tax_table(ps_PRJNA838732_V4)[,"Supergroup"])]
+ps_PRJNA838732_V4<-prune_taxa(keep_taxa,ps_PRJNA838732_V4)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA838732_"
+old_names<-taxa_names(ps_PRJNA838732_V4)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_PRJNA838732_V4)<-new_names
+otu_table(ps_PRJNA838732_V4)<-otu_table(ps_PRJNA838732_V4)[new_names,]
+tax_table(ps_PRJNA838732_V4)<-tax_table(ps_PRJNA838732_V4)[new_names,]
+```
+
+## Merging individual phyloseq objects together
+
+```{r}
+#Merge phyloseq objects
+ps_merged_V4<-merge_phyloseq(ps_PRJNA329332_V4,ps_PRJNA803180_V4,ps_PRJNA805287_V4,ps_PRJNA838732_V4)
+
+#How many ASVs and samples
+ntaxa(ps_merged_V4)
+nsamples(ps_merged_V4)
+```
