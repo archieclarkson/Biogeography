@@ -1,0 +1,75 @@
+---
+title: "Chapter 2: Biogeography of microeukaryotes in anoxic and hypersaline polar freshwater"
+format: html
+editor: visual
+code-fold: true
+---
+
+## Installing and loading packages
+
+```{r}
+#Set working directory
+setwd("C:/Users/ac1552/OneDrive - Natural History Museum/Documents/PhD/Biogeography/R/250524_merge_data")
+
+#Load libraries
+#install.packages("ggplot2")
+require(ggplot2)
+#install.packages("ggforce")
+require(ggforce)
+#install.packages("ggtree")
+require(ggtree)
+#if (!require("BiocManager", quietly = TRUE))
+#  install.packages("BiocManager")
+#if(!requireNamespace("BiocManager")){
+#  install.packages("BiocManager")
+#BiocManager::install("phyloseq",force=T)
+#BiocManager::install("XVector")
+#BiocManager::install("UCSC.utils")
+require(phyloseq)
+require(tidyr)
+#install.packages("forcats")
+require(forcats)
+require(plyr)
+require(dplyr)
+#for rownames_to_column() function
+require(tibble)
+#for write_tsv() function
+require(readr)
+#BiocManager::install("microbiome")
+require(microbiome)
+#install.packages("vegan")
+require(vegan)
+#install.packages("labdsv")
+require(labdsv)
+#install.packages("devtools")
+#devtools::install_github("jiho/chroma")
+require(chroma)
+#install.packages("RColorBrewer")
+require(RColorBrewer)
+#install.packages("flextable")
+require(flextable)
+#install.packages("lme4")
+#install.packages("lmtest")
+require(lme4)
+require(lmtest)
+require(stringr)
+require(grid)
+require(scales)
+require(gridExtra)
+#install.packages("FSA")
+require(FSA)
+#install.packages("phytools")
+require(phytools)
+#install.packages("devtools")
+#devtools::install_github("jfq3/QsRutils", build_vignettes = TRUE)
+require(QsRutils)
+#install.packages("ggrepel")
+require(ggrepel)
+#install.packages("Polychrome")
+require(Polychrome)
+#install.packages("remotes")
+#BiocManager::install("ggtreeExtra")
+require(ggtreeExtra)
+#install.packages("ggnewscale")
+require(ggnewscale)
+```
