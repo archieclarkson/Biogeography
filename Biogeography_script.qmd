@@ -5,12 +5,16 @@ editor: visual
 code-fold: true
 ---
 
-## Installing and loading packages
+## Set working directory
 
 ```{r}
 #Set working directory
-setwd("C:/Users/ac1552/OneDrive - Natural History Museum/Documents/PhD/Biogeography/R/250524_merge_data")
+setwd("C:/Users/ac1552/OneDrive - Natural History Museum/Documents/PhD/Biogeography/R/Biogeography")
+```
 
+## Installing and loading packages
+
+```{r}
 #Load libraries
 #install.packages("ggplot2")
 require(ggplot2)
@@ -72,4 +76,145 @@ require(Polychrome)
 require(ggtreeExtra)
 #install.packages("ggnewscale")
 require(ggnewscale)
+```
+
+## Set functions
+
+```{r}
+#Functions
+#Prune 0 abundance records and samples from a PhyloSeq object
+prune_ps<-function(ps){
+  ps<-prune_samples(sample_sums(ps)>0,ps)
+  ps<-prune_taxa(taxa_sums(ps)>0,ps)
+  return(ps)
+}
+
+#Prune 0 abundance records from dataframe 
+prune_0<-function(df){
+  df<-df%>%filter(df$Abundance>0)
+}
+
+#18S Processing function
+#PhyloSeq object input and glom mode
+process_ps_18S<-function(ps,glom="tip",transformation="none",remove_na=T){
+  #Remove 0 count taxa from PhyloSeq object
+  ps<-prune_ps(ps)
+  #If division agglomeration requested, otherwise do tipglom
+  if(remove_na==F){
+      if(glom=="Domain"){
+      ps<-tax_glom(ps,taxrank="Domain",NArm=F)
+    } else if(glom=="Supergroup"){
+      ps<-tax_glom(ps,taxrank="Supergroup",NArm=F)
+    } else if(glom=="Division"){
+      ps<-tax_glom(ps,taxrank="Division",NArm=F)
+    } else if(glom=="Subdivision"){
+      ps<-tax_glom(ps,taxrank="Subdivision",NArm=F)
+    } else if(glom=="Class"){
+      ps<-tax_glom(ps,taxrank="Class",NArm=F)
+    } else if(glom=="Order"){
+      ps<-tax_glom(ps,taxrank="Order",NArm=F)
+    } else if(glom=="Family"){
+      ps<-tax_glom(ps,taxrank="Family",NArm=F)
+    } else if(glom=="Genus"){
+      ps<-tax_glom(ps,taxrank="Genus",NArm=F)
+    } else if(glom=="Species"){
+      ps<-tax_glom(ps,taxrank="Species",NArm=F)
+    } else if(glom=="tip"){
+      ps<-tip_glom(ps,h=0.001)
+    }
+  }
+  else if(remove_na==T){
+      if(glom=="Domain"){
+      ps<-tax_glom(ps,taxrank="Domain")
+    } else if(glom=="Supergroup"){
+      ps<-tax_glom(ps,taxrank="Supergroup")
+    } else if(glom=="Division"){
+      ps<-tax_glom(ps,taxrank="Division")
+    } else if(glom=="Subdivision"){
+      ps<-tax_glom(ps,taxrank="Subdivision")
+    } else if(glom=="Class"){
+      ps<-tax_glom(ps,taxrank="Class")
+    } else if(glom=="Order"){
+      ps<-tax_glom(ps,taxrank="Order")
+    } else if(glom=="Family"){
+      ps<-tax_glom(ps,taxrank="Family")
+    } else if(glom=="Genus"){
+      ps<-tax_glom(ps,taxrank="Genus")
+    } else if(glom=="Species"){
+      ps<-tax_glom(ps,taxrank="Species")
+    } else if(glom=="tip"){
+      ps<-tip_glom(ps,h=0.01)
+    }
+  }
+    #0.2 is the default value, 0.01 is the value which still retained quite a lot of info
+  #If transformation is comp, then if pa, otherwise nothing
+  if(transformation=="comp"){
+    ps<-microbiome::transform(ps,"compositional")
+  } else if(transformation=="pa"){
+    ps<-microbiome::transform(ps,"pa")
+  } else if(transformation=="none"){
+    ps
+  }
+  return(ps)
+}
+
+#Theme function
+theme_mine <- function(base_size=12,base_family="") {
+  # Starts with theme_grey and then modify some parts
+  theme_bw(base_size=base_size,base_family=base_family,
+           base_line_size=base_size/24,base_rect_size=base_size/24)%+replace%
+    theme(
+      strip.background = element_blank(),
+      strip.text.x = element_text(size = 18),
+      strip.text.y = element_text(size = 18),
+      axis.text.x = element_text(size=14),
+      axis.text.y = element_text(size=14,hjust=1),
+      axis.ticks =  element_line(colour = "black"), 
+      axis.title.x= element_text(size=16),
+      axis.title.y= element_text(size=16,angle=90),
+      #legend.position = "none", 
+      panel.background = element_blank(), 
+      panel.border =element_blank(), 
+      #panel.grid.major = element_blank(), 
+      #panel.grid.minor = element_blank(), 
+      panel.margin = unit(1.0, "lines"), 
+      plot.background = element_blank(), 
+      plot.margin = unit(c(0.5,  0.5, 0.5, 0.5), "lines"),
+      axis.line = element_line(colour = "black")
+    )
+}
+
+#Bubble theme
+theme_bubble <- function(base_size=12,base_family="") {
+  # Starts with theme_grey and then modify some parts
+  theme_bw(base_size=base_size,base_family=base_family,
+           base_line_size=base_size/24,base_rect_size=base_size/24)%+replace%
+    theme(
+      strip.background = element_blank(),
+      strip.text.x = element_text(size = 18),
+      strip.text.y = element_text(size = 18),
+      axis.text.x = element_text(size=14,angle=90),
+      axis.text.y = element_text(size=14,hjust=1),
+      axis.ticks =  element_line(colour = "black"), 
+      axis.title.x= element_text(size=16),
+      axis.title.y= element_text(size=16,angle=90),
+      #legend.position = "none", 
+      panel.background = element_blank(), 
+      panel.border =element_blank(), 
+      #panel.grid.major = element_blank(), 
+      #panel.grid.minor = element_blank(), 
+      panel.margin = unit(1.0, "lines"), 
+      plot.background = element_blank(), 
+      plot.margin = unit(c(0.5,  0.5, 0.5, 0.5), "lines"),
+      axis.line = element_line(colour = "black")
+    )
+}
+
+remove_phyloseq_tree <- function(ps) {
+  phyloseq::phyloseq(
+    otu_table(ps),
+    tax_table(ps),
+    sample_data(ps)
+  )
+}
 ```
