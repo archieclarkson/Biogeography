@@ -709,9 +709,56 @@ bubble_plot<-ggplot(ps_merged_V4_grouped_Class_comp_melt,aes(shape=geo_loc_name,
   scale_shape_manual("Country",values=c(16,15,17,18))+
   labs(y="Class",x="Sample")+
   theme_bubble()+
-  expand_limits(y=c(0,length(levels(ps_merged_V4_grouped_Class_comp_melt$"Class"))),x=c(0,length(levels(ps_merged_V4_grouped_Class_comp_melt$"RepGroup"))))+
+  #expand_limits(y=c(0,length(levels(ps_merged_V4_grouped_Class_comp_melt$"Class"))),x=c(0,length(levels(ps_merged_V4_grouped_Class_comp_melt$"RepGroup"))))+
   guides(size=guide_legend(order=1),colour=guide_legend(order=2))
 bubble_plot$layers
 bubble_plot
 ggsave("Plots/ps_merged_V4_grouped_Class_bubble_plot_with_unresolved.svg",width=600,height=400,units=c("mm"))
+```
+
+## Beta diversity - NMDS
+
+### Class level
+
+```{r}
+#NMDS
+ps_merged_V4_grouped_Class_comp<-process_ps_18S(ps_merged_V4_grouped,glom="Class",transformation="comp",remove_na=T)
+ps_merged_V4_grouped_Class_comp_melt<-psmelt(ps_merged_V4_grouped_Class_comp)
+ps_merged_V4_grouped_Class_comp_melt<-prune_0(ps_merged_V4_grouped_Class_comp_melt)
+#Reordering
+#Reordering
+reordering_df<-ps_merged_V4_grouped_Class_comp_melt
+reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"WH_littoral_mat","WH_shallow_mat","WH_deep_mat","WH_snow_pack","WH_water_track","WH_lake_outlet","WH_epilimnion","WH_mixolimnion","WH_hypolimnion","Sheldrake_Lake","Sheldrake_River_Tributary_1","Sheldrake_River_Tributary_2","Sheldrake_River_1","Sheldrake_River_2","Sheldrake_River_3","Sheldrake_River_4","Sheldrake_River_5","Sheldrake_River_6","Sheldrake_River_7","Sheldrake_River_8","Sheldrake_River_9","Hudson_Bay_Estuary_1","Hudson_Bay_Estuary_2","Hudson_Bay_Estuary_3","Hudson_Bay","WS_surface","KS_surface","KS_upper_0.5","KS_upper_1","KS_mid_1.5","KS_mid_2","KS_chemocline_2.5","KS_chemocline_3","KS_chemocline_3.1","KS_anoxic_3.5","KS_anoxic_4","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
+ps_merged_V4_grouped_Class_comp_melt<-reordering_df
+
+#colour palette
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
+
+#Ordination
+ps_merged_V4_grouped_Class_comp_ord_weighted<-ordinate(ps_merged_V4_grouped_Class_comp,"NMDS","bray")
+#Stress: 0.1589103
+#ANOSIMs
+ps_merged_V4_grouped_Class_comp_loc_group=get_variable(ps_merged_V4_grouped_Class_comp, "env_broad_scale")
+ps_merged_V4_grouped_Class_comp_loc_anosim=anosim(distance(ps_merged_V4_grouped_Class_comp, "bray"), ps_merged_V4_grouped_Class_comp_loc_group)
+ps_merged_V4_grouped_Class_comp_loc_anosim
+#ANOSIM: Stress = 0.1819698, ANOSIM R-Stat 0.4945, p value = 0.001
+
+
+ps_merged_V4_grouped_Class_comp_dataframe<-as.data.frame(sample_data(ps_merged_V4_grouped_Class_comp))
+ps_merged_V4_grouped_Class_comp_nmds_weighted<-plot_ordination(ps_merged_V4_grouped_Class_comp,ps_merged_V4_grouped_Class_comp_ord_weighted,type="samples",
+                                      color="env_broad_scale",label="RepGroup",shape="env_medium")+
+  ggtitle("ANOSIM: Stress = 0.1819698, ANOSIM R-Stat 0.4945, p value = 0.001")+
+  scale_colour_manual("Location",values=site_palette)+
+  scale_shape_manual("Media",values=c(15,16,17))+
+  geom_point(size=4,alpha=0.8)+
+  geom_text_repel(mapping=aes(x=NMDS1,y=NMDS2,label=RepGroup,fontface="bold"),inherit.aes=F,,size = 3,vjust=0,nudge_y=0.04,max.overlaps=100)+
+  geom_mark_hull(aes(fill=env_broad_scale,colour=env_broad_scale),show.legend=F)+
+  expand_limits(x=1.5,y=1)+
+  theme_mine()
+ps_merged_V4_grouped_Class_comp_nmds_weighted$layers
+ps_merged_V4_grouped_Class_comp_nmds_weighted$layers<-ps_merged_V4_grouped_Class_comp_nmds_weighted$layers[-1]
+ps_merged_V4_grouped_Class_comp_nmds_weighted$layers<-ps_merged_V4_grouped_Class_comp_nmds_weighted$layers[-1]
+ps_merged_V4_grouped_Class_comp_nmds_weighted
+ggsave("Plots/ps_merged_V4_grouped_Class_comp_nmds_weighted.svg",width=400,height=250,units=c("mm"))
 ```
