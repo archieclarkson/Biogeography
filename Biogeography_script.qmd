@@ -425,8 +425,15 @@ f<-paste(getwd(),"ps_merged_V4_metadata.csv",sep="/")
 merged_metadata<-meta(ps_merged_V4)
 write.csv(merged_metadata,file=f)
 
-#Reorder sample names by location and depth
+#Compositional transformation
+ps_merged_V4_comp<-microbiome::transform(ps_merged_V4,"compositional")
+#Melt into dataframe
+ps_merged_V4_comp_melt<-psmelt(ps_merged_V4_comp)
 
+#Reorder sample names by location and depth
+reordering_df<-ps_merged_V4_comp_melt
+reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","WS_surface","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+ps_merged_V4_comp_melt<-reordering_df
 
 #Name colour palettes using this dataframe
 ```
