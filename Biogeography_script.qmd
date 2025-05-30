@@ -423,29 +423,295 @@ nsamples(ps_merged_V4)
 #Extract metadata and export into a csv
 f<-paste(getwd(),"ps_merged_V4_metadata.csv",sep="/")
 merged_metadata<-meta(ps_merged_V4)
-write.csv(merged_metadata,file=f)
+#write.csv(merged_metadata,file=f)
 
 #Compositional transformation
 ps_merged_V4_comp<-microbiome::transform(ps_merged_V4,"compositional")
 #Melt into dataframe
 ps_merged_V4_comp_melt<-psmelt(ps_merged_V4_comp)
 
-#Reorder sample names by location and depth
+#Reorder sample names
 reordering_df<-ps_merged_V4_comp_melt
-reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","WS_surface","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","WS_surface","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
 ps_merged_V4_comp_melt<-reordering_df
 
 #Name colour palettes using this dataframe
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
 ```
 
 ## Alpha diversity
 
 ```{r}
-p<-plot_richness(ps_merged_V4,measures=c("Observed","Shannon","Simpson"),x="Sample.Name",color="geo_loc_name")+
-  #scale_colour_manual("Broad Location",values=site_palette_2)+
-  #scale_fill_manual("Broad Location",values=site_palette_2)+
+#Calculate alpha diversity indices
+merged_V4_alpha<-estimate_richness(ps_merged_V4,measures=c("Observed","Shannon","Simpson"))
+#Add sample metadata to this new alpha diversity dataframe
+merged_V4_alpha$SampleID<-rownames(merged_V4_alpha)
+merged_V4_metadata<-as(sample_data(ps_merged_V4),"data.frame")
+merged_V4_alpha<-cbind(merged_V4_alpha,merged_V4_metadata[merged_V4_alpha$SampleID,])
+#reshape to long format
+merged_V4_alpha_long<-pivot_longer(merged_V4_alpha,cols=c("Observed","Shannon","Simpson"),names_to="Index",values_to="Diversity")
+
+
+
+#Reorder sample ids
+reordering_df<-merged_V4_alpha_long
+reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","WS_surface","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
+merged_V4_alpha_long<-reordering_df
+
+#colour palette
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
+
+#plot
+p<-ggplot(merged_V4_alpha_long,aes(x=env_broad_scale,y=Diversity,colour=env_broad_scale,fill=env_broad_scale))+
+  scale_colour_manual("Broad Location",values=site_palette)+
+  scale_fill_manual("Broad Location",values=site_palette)+
   geom_point(size=3)+
-  geom_boxplot(alpha=0.8)
+  geom_boxplot(alpha=0.8)+
+  facet_wrap(~Index,scales="free_y")+
+  labs(x="Site",y="Alpha Diversity")+
+  theme(axis.text.x=element_text(angle=90,vjust=1,hjust=1))
 print(p)
+
 ggsave("plots/ps_merged_V4_alpha.svg",width=400,height=400,units=c("mm"))
+```
+
+## Beta diversity - NMDS
+
+```{r}
+#NMDS
+ps_merged_V4_Class_comp<-process_ps_18S(ps_merged_V4,glom="Class",transformation="comp",remove_na=T)
+ps_merged_V4_Class_comp_melt<-psmelt(ps_merged_V4_Class_comp)
+ps_merged_V4_Class_comp_melt<-prune_0(ps_merged_V4_Class_comp_melt)
+#Reordering
+reordering_df<-ps_merged_V4_Class_comp_melt
+reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","WS_surface","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
+ps_merged_V4_Class_comp_melt<-reordering_df
+
+#colour palette
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
+
+#Ordination
+ps_merged_V4_Class_comp_ord_weighted<-ordinate(ps_merged_V4_Class_comp,"NMDS","bray")
+#Stress: 0.1589103
+#ANOSIMs
+ps_merged_V4_Class_comp_loc_group=get_variable(ps_merged_V4_Class_comp, "env_broad_scale")
+ps_merged_V4_Class_comp_loc_anosim=anosim(distance(ps_merged_V4_Class_comp, "bray"), ps_merged_V4_Class_comp_loc_group)
+ps_merged_V4_Class_comp_loc_anosim
+#ANOSIM: Stress = 0.1819698, ANOSIM R-Stat 0.4945, p value = 0.001
+
+
+ps_merged_V4_Class_comp_dataframe<-as.data.frame(sample_data(ps_merged_V4_Class_comp))
+ps_merged_V4_Class_comp_nmds_weighted<-plot_ordination(ps_merged_V4_Class_comp,ps_merged_V4_Class_comp_ord_weighted,type="samples",
+                                      color="env_broad_scale",label="Sample.Name",shape="env_medium")+
+  ggtitle("ANOSIM: Stress = 0.1819698, ANOSIM R-Stat 0.4945, p value = 0.001")+
+  scale_colour_manual("Location",values=site_palette)+
+  scale_shape_manual("Media",values=c(15,16,17))+
+  geom_point(size=4,alpha=0.8)+
+  geom_text_repel(mapping=aes(x=NMDS1,y=NMDS2,label=Sample.Name,fontface="bold"),inherit.aes=F,,size = 3,vjust=0,nudge_y=0.04,max.overlaps=100)+
+  geom_mark_hull(aes(fill=env_broad_scale,colour=env_broad_scale),show.legend=F)+
+  expand_limits(x=1.5,y=1)+
+  theme_mine()
+ps_merged_V4_Class_comp_nmds_weighted$layers
+ps_merged_V4_Class_comp_nmds_weighted$layers<-ps_merged_V4_Class_comp_nmds_weighted$layers[-1]
+ps_merged_V4_Class_comp_nmds_weighted$layers<-ps_merged_V4_Class_comp_nmds_weighted$layers[-1]
+ps_merged_V4_Class_comp_nmds_weighted
+ggsave("Plots/ps_merged_V4_Class_comp_nmds_weighted.svg",width=400,height=250,units=c("mm"))
+```
+
+## Relative Abundance bubble plots
+
+### Class level
+
+```{r}
+#Class level
+ps_merged_V4_Class_comp<-process_ps_18S(ps_merged_V4,glom="Class",transformation="comp",remove_na=F)
+#Extract taxonomy table
+tax<-tax_table(ps_merged_V4_Class_comp)
+unresolved_taxa<-is.na(tax[,"Class"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to class level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+#Replace tax table of phyloseq object
+tax_table(ps_merged_V4_Class_comp)<-tax_fixed
+#Reprocess the ps object
+ps_merged_V4_Class_comp<-tax_glom(ps_merged_V4_Class_comp,taxrank="Class")
+ps_merged_V4_Class_comp_melt<-psmelt(ps_merged_V4_Class_comp)
+ps_merged_V4_Class_comp_melt[["Class"]]<-as.character(ps_merged_V4_Class_comp_melt[["Class"]])
+ps_merged_V4_Class_comp_melt<-prune_0(ps_merged_V4_Class_comp_melt)
+
+#Reordering
+reordering_df<-ps_merged_V4_Class_comp_melt
+reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","WS_surface","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
+ps_merged_V4_Class_comp_melt<-reordering_df
+
+
+# Calculate mean abundance by Class
+mean_abund <- ps_merged_V4_Class_comp_melt %>%
+  group_by(Class) %>%
+  summarise(mean_abund = mean(Abundance, na.rm = TRUE)) %>%
+  arrange(desc(mean_abund))
+# Get levels in abundance order
+Class_levels<-mean_abund$Class
+# Move 'Unresolved' to the end
+Class_levels<-c(setdiff(Class_levels, "Unresolved"), "Unresolved")
+# Apply new levels
+ps_merged_V4_Class_comp_melt$Class<-factor(ps_merged_V4_Class_comp_melt$Class,levels=Class_levels)
+
+#Group low abundance data together (<0.01%)
+ps_merged_V4_Class_comp_melt[["Class"]][ps_merged_V4_Class_comp_melt$Abundance<0.001]<-"<0.1% total abundance"
+#Remove any NAs generated
+ps_merged_V4_Class_comp_melt$Class[is.na(ps_merged_V4_Class_comp_melt$Class)] <- "Unresolved"
+#Palette with lots of colours
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
+
+#plot bubble plot
+bubble_plot<-ggplot(ps_merged_V4_Class_comp_melt,aes(shape=geo_loc_name,x=Sample.Name,y=fct_rev(Class)))+
+  geom_point(aes(size=Abundance,color=as.factor(env_broad_scale),shape=env_medium),alpha=0.8)+
+  scale_size_continuous("Relative Abundance",limits=c(0.00001,1),range=c(1.5,15),breaks=c(0.10,0.25,0.50,0.75,1),labels=c("10%","25%","50%","75%","100%"))+
+  scale_color_manual("Location",values=site_palette)+
+  scale_shape_manual("Country",values=c(16,15,17,18))+
+  labs(y="Class",x="Sample")+
+  theme_bubble()+
+  expand_limits(y=c(0,length(levels(ps_merged_V4_Class_comp_melt$"Class"))),x=c(0,length(levels(ps_merged_V4_Class_comp_melt$"Sample.Name"))))+
+  guides(size=guide_legend(order=1),colour=guide_legend(order=2))
+bubble_plot$layers
+bubble_plot
+ggsave("Plots/ps_merged_V4_Class_bubble_plot_with_unresolved.svg",width=600,height=400,units=c("mm"))
+```
+
+## Averaging across replicates
+
+```{r}
+#Convert NAs to 0 abundance
+otu_table(ps_merged_V4)[is.na(otu_table(ps_merged_V4))]<-0
+
+#Preserve metadata
+metadata_backup <- as(sample_data(ps_merged_V4_comp), "data.frame")
+metadata_backup$SampleID <- rownames(metadata_backup)
+
+#Merge samples according to their replicate group
+ps_merged_V4_grouped<-merge_samples(ps_merged_V4,group="RepGroup")
+
+
+#Create new metadata manually, using first row per group since the replicates had identical metadata
+metadata_grouped <- metadata_backup %>%
+  group_by(RepGroup) %>%
+  slice(1) %>%
+  ungroup()
+
+#Force setting of sample names to correct rownames (RepGroup)
+metadata_grouped_sd<-sample_data(as.data.frame(metadata_grouped))
+sample_names(metadata_grouped_sd)<-metadata_grouped$RepGroup
+sample_data(ps_merged_V4_grouped) <- metadata_grouped_sd
+
+
+#get number of replicates per group
+rep_counts<-table(sample_data(ps_merged_V4)$RepGroup)
+
+#extract and convert otu table to a matrix
+otu_mat<-as(otu_table(ps_merged_V4_grouped),"matrix")
+otu_mat<-t(otu_mat)
+#ensure sample names match
+missing_names <- setdiff(colnames(otu_mat), names(rep_counts))
+if (length(missing_names) > 0) {
+  print("Warning: These merged sample names are missing from rep_counts:")
+  print(missing_names)
+}
+colnames(otu_mat) <- as.character(colnames(otu_mat))
+names(rep_counts) <- as.character(names(rep_counts))
+
+
+#Average
+otu_mat<-sweep(otu_mat,2,rep_counts[colnames(otu_mat)],"/")
+otu_mat[is.na(otu_mat)] <- 0
+#average merged abundances
+#otu_table(ps_merged_V4_comp_grouped)<-otu_table(ps_merged_V4_comp_grouped)/rep_counts[rownames(otu_table(ps_merged_V4_comp_grouped))]
+
+#Check and align sample names
+otu_mat <- otu_mat[, rownames(sample_data(ps_merged_V4_grouped))]
+
+#Return back to phyloseq object
+otu_table(ps_merged_V4_grouped) <- otu_table(otu_mat, taxa_are_rows = TRUE)
+```
+
+## Relative Abundance bubble plots
+
+### Class level
+
+```{r}
+#Class level
+#ps_merged_V4_grouped_Class_comp<-process_ps_18S(ps_merged_V4_grouped,glom="Class",transformation="comp",remove_na=F)
+#Extract taxonomy table
+tax<-tax_table(ps_merged_V4_grouped_Class_comp)
+unresolved_taxa<-is.na(tax[,"Class"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to class level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+#Replace tax table of phyloseq object
+tax_table(ps_merged_V4_grouped_Class_comp)<-tax_fixed
+#Reprocess the ps object
+ps_merged_V4_grouped_Class_comp<-tax_glom(ps_merged_V4_grouped_Class_comp,taxrank="Class")
+ps_merged_V4_grouped_Class_comp_melt<-psmelt(ps_merged_V4_grouped_Class_comp)
+ps_merged_V4_grouped_Class_comp_melt[["Class"]]<-as.character(ps_merged_V4_grouped_Class_comp_melt[["Class"]])
+ps_merged_V4_grouped_Class_comp_melt<-prune_0(ps_merged_V4_grouped_Class_comp_melt)
+
+#Reordering
+reordering_df<-ps_merged_V4_grouped_Class_comp_melt
+reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"WH_littoral_mat","WH_shallow_mat","WH_deep_mat","WH_snow_pack","WH_water_track","WH_lake_outlet","WH_epilimnion","WH_mixolimnion","WH_hypolimnion","Sheldrake_Lake","Sheldrake_River_Tributary_1","Sheldrake_River_Tributary_2","Sheldrake_River_1","Sheldrake_River_2","Sheldrake_River_3","Sheldrake_River_4","Sheldrake_River_5","Sheldrake_River_6","Sheldrake_River_7","Sheldrake_River_8","Sheldrake_River_9","Hudson_Bay_Estuary_1","Hudson_Bay_Estuary_2","Hudson_Bay_Estuary_3","Hudson_Bay","WS_surface","KS_surface","KS_upper_0.5","KS_upper_1","KS_mid_1.5","KS_mid_2","KS_chemocline_2.5","KS_chemocline_3","KS_chemocline_3.1","KS_anoxic_3.5","KS_anoxic_4","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
+ps_merged_V4_grouped_Class_comp_melt<-reordering_df
+
+
+# Calculate mean abundance by Class
+mean_abund <- ps_merged_V4_grouped_Class_comp_melt %>%
+  group_by(Class) %>%
+  summarise(mean_abund = mean(Abundance, na.rm = TRUE)) %>%
+  arrange(desc(mean_abund))
+# Get levels in abundance order
+Class_levels<-mean_abund$Class
+# Move 'Unresolved' to the end
+Class_levels<-c(setdiff(Class_levels, "Unresolved"), "Unresolved")
+# Apply new levels
+ps_merged_V4_grouped_Class_comp_melt$Class<-factor(ps_merged_V4_grouped_Class_comp_melt$Class,levels=Class_levels)
+
+#Group low abundance data together (<0.01%)
+ps_merged_V4_grouped_Class_comp_melt[["Class"]][ps_merged_V4_grouped_Class_comp_melt$Abundance<0.001]<-"<0.1% total abundance"
+#Remove any NAs generated
+ps_merged_V4_grouped_Class_comp_melt$Class[is.na(ps_merged_V4_grouped_Class_comp_melt$Class)] <- "Unresolved"
+#Palette with lots of colours
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
+
+#plot bubble plot
+bubble_plot<-ggplot(ps_merged_V4_grouped_Class_comp_melt,aes(shape=geo_loc_name,x=RepGroup,y=fct_rev(Class)))+
+  geom_point(aes(size=Abundance,color=as.factor(env_broad_scale),shape=env_medium),alpha=0.8)+
+  scale_size_continuous("Relative Abundance",limits=c(0.00001,1),range=c(1.5,15),breaks=c(0.10,0.25,0.50,0.75,1),labels=c("10%","25%","50%","75%","100%"))+
+  scale_color_manual("Location",values=site_palette)+
+  scale_shape_manual("Country",values=c(16,15,17,18))+
+  labs(y="Class",x="Sample")+
+  theme_bubble()+
+  expand_limits(y=c(0,length(levels(ps_merged_V4_grouped_Class_comp_melt$"Class"))),x=c(0,length(levels(ps_merged_V4_grouped_Class_comp_melt$"RepGroup"))))+
+  guides(size=guide_legend(order=1),colour=guide_legend(order=2))
+bubble_plot$layers
+bubble_plot
+ggsave("Plots/ps_merged_V4_grouped_Class_bubble_plot_with_unresolved.svg",width=600,height=400,units=c("mm"))
 ```
