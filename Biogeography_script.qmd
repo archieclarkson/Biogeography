@@ -234,6 +234,8 @@ remove_phyloseq_tree <- function(ps) {
 
 ## Importing PRJNAs as separate phyloseq objects
 
+### First: V4 datasets
+
 ### PRJNA329332
 
 ```{r}
@@ -410,7 +412,185 @@ otu_table(ps_PRJNA838732_V4)<-otu_table(ps_PRJNA838732_V4)[new_names,]
 tax_table(ps_PRJNA838732_V4)<-tax_table(ps_PRJNA838732_V4)[new_names,]
 ```
 
-## Merging individual phyloseq objects together
+### Next, V9 datasets
+
+### MSc_Bonney_East
+
+```{r}
+#Read in OTU table
+MSc_Bonney_East_V9_otu_table=read.csv("data/MSc_Bonney_East/V9_18S_MSc_Bonney_East_table.csv",sep=",",row.names=1,na.strings="")
+MSc_Bonney_East_V9_otu_table=as.matrix(MSc_Bonney_East_V9_otu_table)
+
+#Read in taxonomy
+MSc_Bonney_East_V9_taxonomy=read.csv("data/MSc_Bonney_East/V9_18S_MSc_Bonney_East-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+MSc_Bonney_East_V9_taxonomy_df<-as.data.frame(MSc_Bonney_East_V9_taxonomy)
+#Filter out low confidence assignments
+MSc_Bonney_East_V9_taxonomy_97_df<-MSc_Bonney_East_V9_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+MSc_Bonney_East_V9_taxonomy_97=as.matrix(MSc_Bonney_East_V9_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+MSc_Bonney_East_V9_metadata=read.csv("data/MSc_Bonney_East/V9_18S_MSc_Bonney_East_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_MSc_Bonney_East_V9=otu_table(MSc_Bonney_East_V9_otu_table,taxa_are_rows=TRUE)
+TAX_MSc_Bonney_East_V9=tax_table(MSc_Bonney_East_V9_taxonomy_97)
+META_MSc_Bonney_East_V9=sample_data(MSc_Bonney_East_V9_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_MSc_Bonney_East_V9)
+sample_names(META_MSc_Bonney_East_V9)
+
+#Merge into one PhyloSeq object
+ps_MSc_Bonney_East_V9=phyloseq(OTU_MSc_Bonney_East_V9,TAX_MSc_Bonney_East_V9,META_MSc_Bonney_East_V9)
+ps_MSc_Bonney_East_V9
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_MSc_Bonney_East_V9)[!is.na(tax_table(ps_MSc_Bonney_East_V9)[,"Supergroup"])]
+ps_MSc_Bonney_East_V9<-prune_taxa(keep_taxa,ps_MSc_Bonney_East_V9)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA838732_"
+old_names<-taxa_names(ps_MSc_Bonney_East_V9)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_MSc_Bonney_East_V9)<-new_names
+otu_table(ps_MSc_Bonney_East_V9)<-otu_table(ps_MSc_Bonney_East_V9)[new_names,]
+tax_table(ps_MSc_Bonney_East_V9)<-tax_table(ps_MSc_Bonney_East_V9)[new_names,]
+```
+
+### MSc_Joyce
+
+```{r}
+#Read in OTU table
+MSc_Joyce_V9_otu_table=read.csv("data/MSc_Joyce/V9_18S_MSc_Joyce_table.csv",sep=",",row.names=1,na.strings="")
+MSc_Joyce_V9_otu_table=as.matrix(MSc_Joyce_V9_otu_table)
+
+#Read in taxonomy
+MSc_Joyce_V9_taxonomy=read.csv("data/MSc_Joyce/V9_18S_MSc_Joyce-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+MSc_Joyce_V9_taxonomy_df<-as.data.frame(MSc_Joyce_V9_taxonomy)
+#Filter out low confidence assignments
+MSc_Joyce_V9_taxonomy_97_df<-MSc_Joyce_V9_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+MSc_Joyce_V9_taxonomy_97=as.matrix(MSc_Joyce_V9_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+MSc_Joyce_V9_metadata=read.csv("data/MSc_Joyce/V9_18S_MSc_Joyce_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_MSc_Joyce_V9=otu_table(MSc_Joyce_V9_otu_table,taxa_are_rows=TRUE)
+TAX_MSc_Joyce_V9=tax_table(MSc_Joyce_V9_taxonomy_97)
+META_MSc_Joyce_V9=sample_data(MSc_Joyce_V9_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_MSc_Joyce_V9)
+sample_names(META_MSc_Joyce_V9)
+
+#Merge into one PhyloSeq object
+ps_MSc_Joyce_V9=phyloseq(OTU_MSc_Joyce_V9,TAX_MSc_Joyce_V9,META_MSc_Joyce_V9)
+ps_MSc_Joyce_V9
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_MSc_Joyce_V9)[!is.na(tax_table(ps_MSc_Joyce_V9)[,"Supergroup"])]
+ps_MSc_Joyce_V9<-prune_taxa(keep_taxa,ps_MSc_Joyce_V9)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA838732_"
+old_names<-taxa_names(ps_MSc_Joyce_V9)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_MSc_Joyce_V9)<-new_names
+otu_table(ps_MSc_Joyce_V9)<-otu_table(ps_MSc_Joyce_V9)[new_names,]
+tax_table(ps_MSc_Joyce_V9)<-tax_table(ps_MSc_Joyce_V9)[new_names,]
+```
+
+### MSc_Vanda
+
+```{r}
+#Read in OTU table
+MSc_Vanda_V9_otu_table=read.csv("data/MSc_Vanda/V9_18S_MSc_Vanda_table.csv",sep=",",row.names=1,na.strings="")
+MSc_Vanda_V9_otu_table=as.matrix(MSc_Vanda_V9_otu_table)
+
+#Read in taxonomy
+MSc_Vanda_V9_taxonomy=read.csv("data/MSc_Vanda/V9_18S_MSc_Vanda-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+MSc_Vanda_V9_taxonomy_df<-as.data.frame(MSc_Vanda_V9_taxonomy)
+#Filter out low confidence assignments
+MSc_Vanda_V9_taxonomy_97_df<-MSc_Vanda_V9_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+MSc_Vanda_V9_taxonomy_97=as.matrix(MSc_Vanda_V9_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+MSc_Vanda_V9_metadata=read.csv("data/MSc_Vanda/V9_18S_MSc_Vanda_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_MSc_Vanda_V9=otu_table(MSc_Vanda_V9_otu_table,taxa_are_rows=TRUE)
+TAX_MSc_Vanda_V9=tax_table(MSc_Vanda_V9_taxonomy_97)
+META_MSc_Vanda_V9=sample_data(MSc_Vanda_V9_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_MSc_Vanda_V9)
+sample_names(META_MSc_Vanda_V9)
+
+#Merge into one PhyloSeq object
+ps_MSc_Vanda_V9=phyloseq(OTU_MSc_Vanda_V9,TAX_MSc_Vanda_V9,META_MSc_Vanda_V9)
+ps_MSc_Vanda_V9
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_MSc_Vanda_V9)[!is.na(tax_table(ps_MSc_Vanda_V9)[,"Supergroup"])]
+ps_MSc_Vanda_V9<-prune_taxa(keep_taxa,ps_MSc_Vanda_V9)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA838732_"
+old_names<-taxa_names(ps_MSc_Vanda_V9)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_MSc_Vanda_V9)<-new_names
+otu_table(ps_MSc_Vanda_V9)<-otu_table(ps_MSc_Vanda_V9)[new_names,]
+tax_table(ps_MSc_Vanda_V9)<-tax_table(ps_MSc_Vanda_V9)[new_names,]
+```
+
+### PRJNA744712
+
+```{r}
+#Read in OTU table
+PRJNA744712_V9_otu_table=read.csv("data/PRJNA744712/V9_18S_PRJNA744712_table.csv",sep=",",row.names=1,na.strings="")
+PRJNA744712_V9_otu_table=as.matrix(PRJNA744712_V9_otu_table)
+
+#Read in taxonomy
+PRJNA744712_V9_taxonomy=read.csv("data/PRJNA744712/V9_18S_PRJNA744712-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+PRJNA744712_V9_taxonomy_df<-as.data.frame(PRJNA744712_V9_taxonomy)
+#Filter out low confidence assignments
+PRJNA744712_V9_taxonomy_97_df<-PRJNA744712_V9_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+PRJNA744712_V9_taxonomy_97=as.matrix(PRJNA744712_V9_taxonomy_97_df)
+
+#Read in metadata
+#V9_18S
+PRJNA744712_V9_metadata=read.csv("data/PRJNA744712/V9_18S_PRJNA744712_metadata.csv",row.names=1,na.strings="")
+
+#Import as PhyloSeq objects
+OTU_PRJNA744712_V9=otu_table(PRJNA744712_V9_otu_table,taxa_are_rows=TRUE)
+TAX_PRJNA744712_V9=tax_table(PRJNA744712_V9_taxonomy_97)
+META_PRJNA744712_V9=sample_data(PRJNA744712_V9_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_PRJNA744712_V9)
+sample_names(META_PRJNA744712_V9)
+
+#Merge into one PhyloSeq object
+ps_PRJNA744712_V9=phyloseq(OTU_PRJNA744712_V9,TAX_PRJNA744712_V9,META_PRJNA744712_V9)
+ps_PRJNA744712_V9
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_PRJNA744712_V9)[!is.na(tax_table(ps_PRJNA744712_V9)[,"Supergroup"])]
+ps_PRJNA744712_V9<-prune_taxa(keep_taxa,ps_PRJNA744712_V9)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"PRJNA838732_"
+old_names<-taxa_names(ps_PRJNA744712_V9)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_PRJNA744712_V9)<-new_names
+otu_table(ps_PRJNA744712_V9)<-otu_table(ps_PRJNA744712_V9)[new_names,]
+tax_table(ps_PRJNA744712_V9)<-tax_table(ps_PRJNA744712_V9)[new_names,]
+```
+
+## Merging individual V4 phyloseq objects together
 
 ```{r}
 #Merge phyloseq objects
@@ -742,13 +922,13 @@ ps_merged_V4_grouped_Class_comp_ord_weighted<-ordinate(ps_merged_V4_grouped_Clas
 ps_merged_V4_grouped_Class_comp_loc_group=get_variable(ps_merged_V4_grouped_Class_comp, "env_broad_scale")
 ps_merged_V4_grouped_Class_comp_loc_anosim=anosim(distance(ps_merged_V4_grouped_Class_comp, "bray"), ps_merged_V4_grouped_Class_comp_loc_group)
 ps_merged_V4_grouped_Class_comp_loc_anosim
-#ANOSIM: Stress = 0.1819698, ANOSIM R-Stat 0.4945, p value = 0.001
+#ANOSIM: Stress = 0.1447421, ANOSIM R-Stat 0.4238, p value = 0.001
 
 
 ps_merged_V4_grouped_Class_comp_dataframe<-as.data.frame(sample_data(ps_merged_V4_grouped_Class_comp))
 ps_merged_V4_grouped_Class_comp_nmds_weighted<-plot_ordination(ps_merged_V4_grouped_Class_comp,ps_merged_V4_grouped_Class_comp_ord_weighted,type="samples",
                                       color="env_broad_scale",label="RepGroup",shape="env_medium")+
-  ggtitle("ANOSIM: Stress = 0.1819698, ANOSIM R-Stat 0.4945, p value = 0.001")+
+  ggtitle("ANOSIM: Stress = 0.1447421, ANOSIM R-Stat 0.4238, p value = 0.001")+
   scale_colour_manual("Location",values=site_palette)+
   scale_shape_manual("Media",values=c(15,16,17))+
   geom_point(size=4,alpha=0.8)+
@@ -761,4 +941,34 @@ ps_merged_V4_grouped_Class_comp_nmds_weighted$layers<-ps_merged_V4_grouped_Class
 ps_merged_V4_grouped_Class_comp_nmds_weighted$layers<-ps_merged_V4_grouped_Class_comp_nmds_weighted$layers[-1]
 ps_merged_V4_grouped_Class_comp_nmds_weighted
 ggsave("Plots/ps_merged_V4_grouped_Class_comp_nmds_weighted.svg",width=400,height=250,units=c("mm"))
+```
+
+## MERGE ALL V4 AND V9
+
+```{r}
+#Merge phyloseq objects
+ps_merged<-merge_phyloseq(ps_PRJNA329332_V4,ps_PRJNA803180_V4,ps_PRJNA805287_V4,ps_PRJNA838732_V4,ps_MSc_Bonney_East_V9,ps_MSc_Joyce_V9,ps_MSc_Vanda_V9,ps_PRJNA744712_V9)
+
+#How many ASVs and samples
+ntaxa(ps_merged)
+nsamples(ps_merged)
+
+#Extract metadata and export into a csv
+f<-paste(getwd(),"ps_merged_metadata.csv",sep="/")
+merged_metadata<-meta(ps_merged)
+write.csv(merged_metadata,file=f)
+
+#Compositional transformation
+ps_merged_comp<-microbiome::transform(ps_merged,"compositional")
+#Melt into dataframe
+ps_merged_comp_melt<-psmelt(ps_merged_comp)
+
+#Reorder sample names
+reordering_df<-ps_merged_comp_melt
+reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","WS_surface","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
+ps_merged_comp_melt<-reordering_df
+
+#Name colour palettes using this dataframe
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
 ```
