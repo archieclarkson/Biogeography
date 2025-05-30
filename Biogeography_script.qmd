@@ -963,12 +963,6 @@ ps_merged_comp<-microbiome::transform(ps_merged,"compositional")
 #Melt into dataframe
 ps_merged_comp_melt<-psmelt(ps_merged_comp)
 
-#Reorder sample names
-reordering_df<-ps_merged_comp_melt
-reordering_df$Sample.Name<-fct_relevel(reordering_df$Sample.Name,"WH_littoral_mat_RNA_1","WH_littoral_mat_RNA_2","WH_littoral_mat_RNA_3","WH_shallow_mat_RNA_1","WH_shallow_mat_RNA_2","WH_shallow_mat_RNA_3","WH_deep_mat_RNA_1","WH_deep_mat_RNA_2","WH_deep_mat_RNA_3","WH_littoral_mat_1","WH_littoral_mat_2","WH_littoral_mat_3","WH_shallow_mat_1","WH_shallow_mat_2","WH_shallow_mat_3","WH_deep_mat_1","WH_deep_mat_2","WH_deep_mat_3","WH_snow_pack_1","WH_snow_pack_2","WH_snow_pack_3","WH_water_track_1","WH_water_track_2","WH_water_track_3","WH_lake_outlet_1","WH_lake_outlet_2","WH_lake_outlet_3","WH_epilimnion_1","WH_epilimnion_2","WH_epilimnion_3","WH_mixolimnion_1","WH_mixolimnion_2","WH_mixolimnion_3","WH_hypolimnion_1","WH_hypolimnion_2","WH_hypolimnion_3","L_RNA_small","L_RNA_large","L_DNA_small","L_DNA_large","T1_RNA_small","T1_RNA_large","T1_DNA_small","T1_DNA_large","T2_RNA_small","T2_RNA_large","T2_DNA_small","T2_DNA_large","R1_RNA_small","R1_RNA_large","R1_DNA_small","R1_DNA_large","R2_RNA_small","R2_RNA_large","R2_DNA_small","R2_DNA_large","R3_RNA_small","R3_RNA_large","R3_DNA_small","R3_DNA_large","R4_RNA_small","R4_RNA_large","R4_DNA_small","R4_DNA_large","R5_RNA_small","R5_RNA_large","R5_DNA_small","R5_DNA_large","R6_RNA_small","R6_RNA_large","R6_DNA_small","R6_DNA_large","R7_RNA_small","R7_RNA_large","R7_DNA_small","R7_DNA_large","R8_RNA_small","R8_RNA_large","R8_DNA_small","R8_DNA_large","R9_RNA_small","R9_RNA_large","R9_DNA_small","R9_DNA_large","P1_RNA_small","P1_RNA_large","P1_DNA_small","P1_DNA_large","P2_RNA_small","P2_RNA_large","P2_DNA_small","P2_DNA_large","P3_RNA_small","P3_RNA_large","P3_DNA_small","P3_DNA_large","B_RNA_small","B_RNA_large","B_DNA_small","B_DNA_large","WS_surface","KS_surface","KS_upper_0.5a","KS_upper_0.5b","KS_upper_1a","KS_upper_1b","KS_mid_1.5a","KS_mid_1.5b","KS_mid_2a","KS_mid_2b","KS_chemocline_2.5a","KS_chemocline_2.5b","KS_chemocline_3a","KS_chemocline_3b","KS_chemocline_3.1a","KS_chemocline_3.1b","KS_anoxic_3.5","KS_anoxic_4a","KS_anoxic_4b","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19")
-reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake")
-ps_merged_comp_melt<-reordering_df
-
 #Name colour palettes using this dataframe
 site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
 ```
@@ -1094,4 +1088,49 @@ bubble_plot<-ggplot(ps_merged_grouped_Class_comp_melt,aes(shape=geo_loc_name,x=R
 bubble_plot$layers
 bubble_plot
 ggsave("Plots/ps_merged_grouped_Class_bubble_plot_with_unresolved.svg",width=600,height=400,units=c("mm"))
+```
+
+## Beta diversity - NMDS
+
+```{r}
+#NMDS
+ps_merged_grouped_Class_comp<-process_ps_18S(ps_merged_grouped,glom="Class",transformation="comp",remove_na=T)
+ps_merged_grouped_Class_comp_melt<-psmelt(ps_merged_grouped_Class_comp)
+ps_merged_grouped_Class_comp_melt<-prune_0(ps_merged_grouped_Class_comp_melt)
+#Reordering
+#Reordering
+reordering_df<-ps_merged_grouped_Class_comp_melt
+reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"WH_littoral_mat","WH_shallow_mat","WH_deep_mat","WH_snow_pack","WH_water_track","WH_lake_outlet","WH_epilimnion","WH_mixolimnion","WH_hypolimnion","Sheldrake_Lake","Sheldrake_River_Tributary_1","Sheldrake_River_Tributary_2","Sheldrake_River_1","Sheldrake_River_2","Sheldrake_River_3","Sheldrake_River_4","Sheldrake_River_5","Sheldrake_River_6","Sheldrake_River_7","Sheldrake_River_8","Sheldrake_River_9","Hudson_Bay_Estuary_1","Hudson_Bay_Estuary_2","Hudson_Bay_Estuary_3","Hudson_Bay","WS_surface","KS_surface","KS_upper_0.5","KS_upper_1","KS_mid_1.5","KS_mid_2","KS_chemocline_2.5","KS_chemocline_3","KS_chemocline_3.1","KS_anoxic_3.5","KS_anoxic_4","Chang_Hu_17","Chang_Hu_18","Chang_Hu_19","Kitec_17","Kitec_18","Kitec_19","Xi_Hu_17","Xi_Hu_18","Xi_Hu_19","Yan_Ou_17","Yan_Ou_18","Yan_Ou_19","Yue_Ya_17","Yue_Ya_18","Yue_Ya_19","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8","Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Ward_Hunt_Lake","Sheldrake_Lake","Sheldrake_River_Tributary","Sheldrake_River","Hudson_Bay_Estuary","Hudson_Bay","White Sea","Kislo-Sladkoe Lake","Chang_Hu_Lake","Kitec_Lake","Xi_Hu_Lake","Yan_Ou_Lake","Yue_Ya_Lake","Canada_glacier","Taylor_glacier","Commonwealth_glacier","Diamond_glacier","Utsteinen_nunatak","Miers_glacier","Lower_Wright_glacier","Lower_Koettlitz_glacier","Upper_Koettlitz_glacier","Storglaciaren","Midtre_Lovenbreen_glacier","Greenland_Ice_margin_glacier","Greenland_Ice_core_glacier","Kangerlussuaq_glacier","Lake_Bonney_East","Lake_Joyce","Lake_Vanda")
+ps_merged_grouped_Class_comp_melt<-reordering_df
+
+#colour palette
+site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
+
+#Ordination
+ps_merged_grouped_Class_comp_ord_weighted<-ordinate(ps_merged_grouped_Class_comp,"NMDS","bray")
+#Stress: 0.1589103
+#ANOSIMs
+ps_merged_grouped_Class_comp_loc_group=get_variable(ps_merged_grouped_Class_comp, "env_broad_scale")
+ps_merged_grouped_Class_comp_loc_anosim=anosim(distance(ps_merged_grouped_Class_comp, "bray"), ps_merged_grouped_Class_comp_loc_group)
+ps_merged_grouped_Class_comp_loc_anosim
+#ANOSIM: Stress = 0.1447421, ANOSIM R-Stat 0.4238, p value = 0.001
+
+
+ps_merged_grouped_Class_comp_dataframe<-as.data.frame(sample_data(ps_merged_grouped_Class_comp))
+ps_merged_grouped_Class_comp_nmds_weighted<-plot_ordination(ps_merged_grouped_Class_comp,ps_merged_grouped_Class_comp_ord_weighted,type="samples",
+                                      color="env_broad_scale",label="RepGroup",shape="env_medium")+
+  ggtitle("ANOSIM: Stress = 0.1447421, ANOSIM R-Stat 0.4238, p value = 0.001")+
+  scale_colour_manual("Location",values=site_palette)+
+  scale_shape_manual("Media",values=c(15,16,17))+
+  geom_point(size=4,alpha=0.8)+
+  geom_text_repel(mapping=aes(x=NMDS1,y=NMDS2,label=RepGroup,fontface="bold"),inherit.aes=F,,size = 3,vjust=0,nudge_y=0.04,max.overlaps=100)+
+  #geom_mark_hull(aes(fill=env_broad_scale,colour=env_broad_scale),show.legend=F)+
+  expand_limits(x=1.5,y=1)+
+  theme_mine()
+ps_merged_grouped_Class_comp_nmds_weighted$layers
+ps_merged_grouped_Class_comp_nmds_weighted$layers<-ps_merged_grouped_Class_comp_nmds_weighted$layers[-1]
+ps_merged_grouped_Class_comp_nmds_weighted$layers<-ps_merged_grouped_Class_comp_nmds_weighted$layers[-1]
+ps_merged_grouped_Class_comp_nmds_weighted
+ggsave("Plots/ps_merged_grouped_Class_comp_nmds_weighted.svg",width=400,height=250,units=c("mm"))
 ```
