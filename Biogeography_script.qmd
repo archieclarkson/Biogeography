@@ -1134,3 +1134,53 @@ ps_merged_grouped_Class_comp_nmds_weighted$layers<-ps_merged_grouped_Class_comp_
 ps_merged_grouped_Class_comp_nmds_weighted
 ggsave("Plots/ps_merged_grouped_Class_comp_nmds_weighted.svg",width=400,height=250,units=c("mm"))
 ```
+
+## Import datasets which used the same primer, processed identically and merged in qiime
+
+V9_1391f_EukBr
+
+Trimming -\> trim left: 5; truncate forward: 200; truncate reverse: 185
+
+```{r}
+#Read in OTU table
+V9_1391f_EukBr_otu_table=read.csv("data/V9_1391f_EukBr/V9_1391f_EukBr_table.csv",sep=",",row.names=1,na.strings="")
+V9_1391f_EukBr_otu_table=as.matrix(V9_1391f_EukBr_otu_table)
+
+#Read in taxonomy
+V9_1391f_EukBr_taxonomy=read.csv("data/V9_1391f_EukBr/V9_1391f_EukBr-pr2-taxonomy.csv",sep=",",row.names=1,na.strings="")
+V9_1391f_EukBr_taxonomy_df<-as.data.frame(V9_1391f_EukBr_taxonomy)
+#Filter out low confidence assignments
+V9_1391f_EukBr_taxonomy_97_df<-V9_1391f_EukBr_taxonomy_df%>%filter(as.numeric(Confidence)>=0.97)
+V9_1391f_EukBr_taxonomy_97=as.matrix(V9_1391f_EukBr_taxonomy_97_df)
+
+#Read in metadata
+V9_1391f_EukBr_metadata=read.csv("data/V9_1391f_EukBr/V9_1391f_EukBr_metadata.csv",row.names=1,na.strings="")
+
+#Read in tree
+phy_tree_V9_1391f_EukBr<-read.tree("data/V9_1391f_EukBr/V9_1391f_EukBr_unrooted_tree.nwk")
+
+#Import as PhyloSeq objects
+OTU_V9_1391f_EukBr=otu_table(V9_1391f_EukBr_otu_table,taxa_are_rows=TRUE)
+TAX_V9_1391f_EukBr=tax_table(V9_1391f_EukBr_taxonomy_97)
+META_V9_1391f_EukBr=sample_data(V9_1391f_EukBr_metadata)
+
+#Check sample names are identical and same order
+sample_names(OTU_V9_1391f_EukBr)
+sample_names(META_V9_1391f_EukBr)
+
+#Merge into one PhyloSeq object
+ps_V9_1391f_EukBr=phyloseq(OTU_V9_1391f_EukBr,TAX_V9_1391f_EukBr,META_V9_1391f_EukBr,phy_tree_V9_1391f_EukBr)
+ps_V9_1391f_EukBr
+
+#Filter out any ASVs not assigned further than 'Eukaryota' by removing any with 'NA' in the next taxonomic rank (Supergroup)
+keep_taxa<-taxa_names(ps_V9_1391f_EukBr)[!is.na(tax_table(ps_V9_1391f_EukBr)[,"Supergroup"])]
+ps_V9_1391f_EukBr<-prune_taxa(keep_taxa,ps_V9_1391f_EukBr)
+
+#Add prefix to front of ASVs in ASV table and taxonomy table
+prefix<-"V9_1391f_EukBr_"
+old_names<-taxa_names(ps_V9_1391f_EukBr)
+new_names<-paste0(prefix,old_names)
+taxa_names(ps_V9_1391f_EukBr)<-new_names
+otu_table(ps_V9_1391f_EukBr)<-otu_table(ps_V9_1391f_EukBr)[new_names,]
+tax_table(ps_V9_1391f_EukBr)<-tax_table(ps_V9_1391f_EukBr)[new_names,]
+```
