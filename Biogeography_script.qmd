@@ -450,7 +450,7 @@ keep_taxa<-taxa_names(ps_MSc_Bonney_East_V9)[!is.na(tax_table(ps_MSc_Bonney_East
 ps_MSc_Bonney_East_V9<-prune_taxa(keep_taxa,ps_MSc_Bonney_East_V9)
 
 #Add prefix to front of ASVs in ASV table and taxonomy table
-prefix<-"PRJNA838732_"
+prefix<-"MSc_Bonney_East_"
 old_names<-taxa_names(ps_MSc_Bonney_East_V9)
 new_names<-paste0(prefix,old_names)
 taxa_names(ps_MSc_Bonney_East_V9)<-new_names
@@ -494,7 +494,7 @@ keep_taxa<-taxa_names(ps_MSc_Joyce_V9)[!is.na(tax_table(ps_MSc_Joyce_V9)[,"Super
 ps_MSc_Joyce_V9<-prune_taxa(keep_taxa,ps_MSc_Joyce_V9)
 
 #Add prefix to front of ASVs in ASV table and taxonomy table
-prefix<-"PRJNA838732_"
+prefix<-"MSc_Joyce_"
 old_names<-taxa_names(ps_MSc_Joyce_V9)
 new_names<-paste0(prefix,old_names)
 taxa_names(ps_MSc_Joyce_V9)<-new_names
@@ -538,7 +538,7 @@ keep_taxa<-taxa_names(ps_MSc_Vanda_V9)[!is.na(tax_table(ps_MSc_Vanda_V9)[,"Super
 ps_MSc_Vanda_V9<-prune_taxa(keep_taxa,ps_MSc_Vanda_V9)
 
 #Add prefix to front of ASVs in ASV table and taxonomy table
-prefix<-"PRJNA838732_"
+prefix<-"MSc_Vanda_"
 old_names<-taxa_names(ps_MSc_Vanda_V9)
 new_names<-paste0(prefix,old_names)
 taxa_names(ps_MSc_Vanda_V9)<-new_names
@@ -582,7 +582,7 @@ keep_taxa<-taxa_names(ps_PRJNA744712_V9)[!is.na(tax_table(ps_PRJNA744712_V9)[,"S
 ps_PRJNA744712_V9<-prune_taxa(keep_taxa,ps_PRJNA744712_V9)
 
 #Add prefix to front of ASVs in ASV table and taxonomy table
-prefix<-"PRJNA838732_"
+prefix<-"PRJNA744712_"
 old_names<-taxa_names(ps_PRJNA744712_V9)
 new_names<-paste0(prefix,old_names)
 taxa_names(ps_PRJNA744712_V9)<-new_names
@@ -964,7 +964,7 @@ ps_merged_comp<-microbiome::transform(ps_merged,"compositional")
 ps_merged_comp_melt<-psmelt(ps_merged_comp)
 
 #Name colour palettes using this dataframe
-site_palette<-unname(createPalette(length(unique(reordering_df$env_broad_scale)),c("#010101","#ffffff")))
+site_palette<-unname(createPalette(length(unique(ps_merged_comp_melt$env_broad_scale)),c("#010101","#ffffff")))
 ```
 
 ### Averaging across replicates
@@ -1087,7 +1087,7 @@ bubble_plot<-ggplot(ps_merged_grouped_Class_comp_melt,aes(shape=geo_loc_name,x=R
   guides(size=guide_legend(order=1),colour=guide_legend(order=2))
 bubble_plot$layers
 bubble_plot
-ggsave("Plots/ps_merged_grouped_Class_bubble_plot_with_unresolved.svg",width=600,height=400,units=c("mm"))
+ggsave("Plots/ps_merged_grouped_Class_bubble_plot_with_unresolved.svg",width=700,height=600,units=c("mm"))
 ```
 
 ## Beta diversity - NMDS
