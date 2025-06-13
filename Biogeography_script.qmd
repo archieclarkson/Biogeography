@@ -89,6 +89,14 @@ require(Polychrome)
 require(ggtreeExtra)
 #install.packages("ggnewscale")
 require(ggnewscale)
+# Install if not already installed
+#install.packages("ggstar")
+# Load the library
+require(ggstar)
+#install.packages("indicspecies")
+require(indicspecies)
+#install.packages("ape")
+require(ape)
 ```
 
 ## Set functions
@@ -1275,7 +1283,8 @@ ps_V9_1391f_EukBr_grouped_Class_comp_melt<-prune_0(ps_V9_1391f_EukBr_grouped_Cla
 
 #Reordering
 reordering_df<-ps_V9_1391f_EukBr_grouped_Class_comp_melt
-reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8")
+#reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8")
+reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney East 18m","Bonney East 22m","Joyce 25m","Joyce 27m","Joyce 37m","Vanda 63m","Vanda 66m","Vanda 71m","Canada Glacier","Taylor Glacier","Commonwealth Glacier","Diamond Glacier","Utsteinen Nunatak","Miers Glacier","Lower Wright Glacier","Lower Koettlitz Glacier","Upper Koettlitz Glacier","Storglaciaren Glacier","Midtre Lovenbreen Glacier","Greenland Ice Margin Glacier","Greenland Ice Core Glacier","Kangerlussuaq Glacier")
 reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Lake_Bonney_East","Lake_Joyce","Lake_Vanda","Canada_glacier","Taylor_glacier","Commonwealth_glacier","Diamond_glacier","Utsteinen_nunatak","Miers_glacier","Lower_Wright_glacier","Lower_Koettlitz_glacier","Upper_Koettlitz_glacier","Storglaciaren","Midtre_Lovenbreen_glacier","Greenland_Ice_margin_glacier","Greenland_Ice_core_glacier","Kangerlussuaq_glacier")
 ps_V9_1391f_EukBr_grouped_Class_comp_melt<-reordering_df
 
@@ -1319,6 +1328,7 @@ bubble_plot<-ggplot(ps_V9_1391f_EukBr_grouped_Class_comp_melt,aes(shape=env_medi
 bubble_plot$layers
 bubble_plot
 #ggsave("Plots/ps_V9_1391f_EukBr_grouped_Class_bubble_plot_with_unresolved.svg",width=600,height=400,units=c("mm"))
+ggsave("Plots/ps_V9_1391f_EukBr_grouped_cryo_Class_bubble_plot_with_unresolved.svg",width=600,height=400,units=c("mm"))
 ```
 
 Alpha diversity
@@ -1338,7 +1348,8 @@ ps_V9_1391f_EukBr_grouped_alpha_long<-pivot_longer(ps_V9_1391f_EukBr_grouped_alp
 
 #Reorder sample ids
 reordering_df<-ps_V9_1391f_EukBr_grouped_alpha_long
-reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8")
+#reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8")
+reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney East 18m","Bonney East 22m","Joyce 25m","Joyce 27m","Joyce 37m","Vanda 63m","Vanda 66m","Vanda 71m","Canada Glacier","Taylor Glacier","Commonwealth Glacier","Diamond Glacier","Utsteinen Nunatak","Miers Glacier","Lower Wright Glacier","Lower Koettlitz Glacier","Upper Koettlitz Glacier","Storglaciaren Glacier","Midtre Lovenbreen Glacier","Greenland Ice Margin Glacier","Greenland Ice Core Glacier","Kangerlussuaq Glacier")
 reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Lake_Bonney_East","Lake_Joyce","Lake_Vanda","Canada_glacier","Taylor_glacier","Commonwealth_glacier","Diamond_glacier","Utsteinen_nunatak","Miers_glacier","Lower_Wright_glacier","Lower_Koettlitz_glacier","Upper_Koettlitz_glacier","Storglaciaren","Midtre_Lovenbreen_glacier","Greenland_Ice_margin_glacier","Greenland_Ice_core_glacier","Kangerlussuaq_glacier")
 ps_V9_1391f_EukBr_grouped_alpha_long<-reordering_df
 
@@ -1346,7 +1357,7 @@ ps_V9_1391f_EukBr_grouped_alpha_long<-reordering_df
 site_palette<-unname(createPalette(length(unique(reordering_df$geo_loc_name)),c("#71c9c1","#ffc385")))
 
 #plot
-p<-ggplot(ps_V9_1391f_EukBr_grouped_alpha_long,aes(x=env_broad_scale,y=Diversity,colour=geo_loc_name,fill=geo_loc_name,shape=env_medium))+
+p<-ggplot(ps_V9_1391f_EukBr_grouped_alpha_long,aes(x=RepGroup,y=Diversity,colour=geo_loc_name,fill=geo_loc_name,shape=env_medium))+
   scale_colour_manual("Location",values=site_palette)+
   scale_fill_manual("Location",values=site_palette)+
   scale_shape_manual("Sample media",values=c(16,15,17,18))+
@@ -1364,49 +1375,53 @@ p<-ggplot(ps_V9_1391f_EukBr_grouped_alpha_long,aes(x=env_broad_scale,y=Diversity
 print(p)
 
 #ggsave("plots/ps_V9_1391f_EukBr_grouped_alpha.svg",width=400,height=400,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_grouped_cryo_alpha.svg",width=400,height=400,units=c("mm"))
 ```
 
 NMDS
 
 ```{r}
 #NMDS
-ps_V9_1391f_EukBr_grouped_comp<-process_ps_18S(ps_V9_1391f_EukBr_grouped,glom="tip",transformation="comp",remove_na=T)
-ps_V9_1391f_EukBr_grouped_comp_melt<-psmelt(ps_V9_1391f_EukBr_grouped_comp)
-ps_V9_1391f_EukBr_grouped_comp_melt<-prune_0(ps_V9_1391f_EukBr_grouped_comp_melt)
+ps_V9_1391f_EukBr_grouped_comp_nmds<-microbiome::transform(ps_V9_1391f_EukBr_grouped,"compositional")
+ps_V9_1391f_EukBr_grouped_comp_nmds_melt<-psmelt(ps_V9_1391f_EukBr_grouped_comp_nmds)
+ps_V9_1391f_EukBr_grouped_comp_nmds_melt<-prune_0(ps_V9_1391f_EukBr_grouped_comp_nmds_melt)
 #Reordering
 #Reordering
-reordering_df<-ps_V9_1391f_EukBr_grouped_comp_melt
-reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8")
+reordering_df<-ps_V9_1391f_EukBr_grouped_comp_nmds_melt
+#reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8")
+reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney East 18m","Bonney East 22m","Joyce 25m","Joyce 27m","Joyce 37m","Vanda 63m","Vanda 66m","Vanda 71m","Canada Glacier","Taylor Glacier","Commonwealth Glacier","Diamond Glacier","Utsteinen Nunatak","Miers Glacier","Lower Wright Glacier","Lower Koettlitz Glacier","Upper Koettlitz Glacier","Storglaciaren Glacier","Midtre Lovenbreen Glacier","Greenland Ice Margin Glacier","Greenland Ice Core Glacier","Kangerlussuaq Glacier")
 reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Lake_Bonney_East","Lake_Joyce","Lake_Vanda","Canada_glacier","Taylor_glacier","Commonwealth_glacier","Diamond_glacier","Utsteinen_nunatak","Miers_glacier","Lower_Wright_glacier","Lower_Koettlitz_glacier","Upper_Koettlitz_glacier","Storglaciaren","Midtre_Lovenbreen_glacier","Greenland_Ice_margin_glacier","Greenland_Ice_core_glacier","Kangerlussuaq_glacier")
-ps_V9_1391f_EukBr_grouped_comp_melt<-reordering_df
+ps_V9_1391f_EukBr_grouped_comp_nmds_melt<-reordering_df
 
 #colour palette
 site_palette<-unname(createPalette(length(unique(reordering_df$geo_loc_name)),c("#71c9c1","#ffc385")))
 
 #Ordination
-ps_V9_1391f_EukBr_grouped_comp_ord_weighted<-ordinate(ps_V9_1391f_EukBr_grouped_comp,"NMDS","bray")
+ps_V9_1391f_EukBr_grouped_comp_nmds_ord_weighted<-ordinate(ps_V9_1391f_EukBr_grouped_comp_nmds,"NMDS","bray")
 #Stress: 0.1589103
 #ANOSIMs
-ps_V9_1391f_EukBr_grouped_comp_site_group=get_variable(ps_V9_1391f_EukBr_grouped_comp, "env_broad_scale")
-ps_V9_1391f_EukBr_grouped_comp_site_anosim=anosim(distance(ps_V9_1391f_EukBr_grouped_comp, "bray"), ps_V9_1391f_EukBr_grouped_comp_site_group)
-ps_V9_1391f_EukBr_grouped_comp_site_anosim
-#ANOSIM: Stress = 0.1646433, ANOSIM R-Stat 0.7351, p value = 0.001
-ps_V9_1391f_EukBr_grouped_comp_loc_group=get_variable(ps_V9_1391f_EukBr_grouped_comp, "geo_loc_name")
-ps_V9_1391f_EukBr_grouped_comp_loc_anosim=anosim(distance(ps_V9_1391f_EukBr_grouped_comp, "bray"), ps_V9_1391f_EukBr_grouped_comp_loc_group)
-ps_V9_1391f_EukBr_grouped_comp_loc_anosim
+ps_V9_1391f_EukBr_grouped_comp_nmds_site_group=get_variable(ps_V9_1391f_EukBr_grouped_comp_nmds, "env_broad_scale")
+ps_V9_1391f_EukBr_grouped_comp_nmds_site_anosim=anosim(distance(ps_V9_1391f_EukBr_grouped_comp_nmds, "bray"), ps_V9_1391f_EukBr_grouped_comp_nmds_site_group)
+ps_V9_1391f_EukBr_grouped_comp_nmds_site_anosim
+#ANOSIM: Stress = 0.1646433, ANOSIM R-Stat 0.8202, p value = 0.001
+#250609: ANOSIM: Stress = 0.122388, ANOSIM R-Stat 0.7351, p value = 0.001
+ps_V9_1391f_EukBr_grouped_comp_nmds_loc_group=get_variable(ps_V9_1391f_EukBr_grouped_comp_nmds, "geo_loc_name")
+ps_V9_1391f_EukBr_grouped_comp_nmds_loc_anosim=anosim(distance(ps_V9_1391f_EukBr_grouped_comp_nmds, "bray"), ps_V9_1391f_EukBr_grouped_comp_nmds_loc_group)
+ps_V9_1391f_EukBr_grouped_comp_nmds_loc_anosim
 #ANOSIM: Stress = 0.1646433, ANOSIM R-Stat 0.3808, p value = 0.001
+#250609: Stress = 0.122388, ANOSIM R-Stat 0.3566, p value = 0.007
 
 
-ps_V9_1391f_EukBr_grouped_comp_dataframe<-as.data.frame(sample_data(ps_V9_1391f_EukBr_grouped_comp))
-ps_V9_1391f_EukBr_grouped_comp_nmds_weighted<-plot_ordination(ps_V9_1391f_EukBr_grouped_comp,ps_V9_1391f_EukBr_grouped_comp_ord_weighted,type="samples",
+ps_V9_1391f_EukBr_grouped_comp_nmds_dataframe<-as.data.frame(sample_data(ps_V9_1391f_EukBr_grouped_comp_nmds))
+ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted<-plot_ordination(ps_V9_1391f_EukBr_grouped_comp_nmds,ps_V9_1391f_EukBr_grouped_comp_nmds_ord_weighted,type="samples",
                                       color="geo_loc_name",label="RepGroup",shape="env_medium")+
-  ggtitle("Stress = 0.1646433, ANOSIM R-Stat 0.7351, p value = 0.001")+
+  ggtitle("Stress = 0.122388, ANOSIM R-Stat 0.7351, p value = 0.001")+
   scale_colour_manual("Location",values=site_palette)+
   scale_shape_manual("Sample media",values=c(15,16,17))+
   geom_point(size=4,alpha=0.8)+
   geom_text_repel(mapping=aes(x=NMDS1,y=NMDS2,label=RepGroup,fontface="bold"),inherit.aes=F,,size = 3,vjust=0,nudge_y=0.04,max.overlaps=100)+
   #geom_mark_hull(aes(fill=geo_loc_name,colour=geo_loc_name),show.legend=F)+
-  expand_limits(x=1.5,y=1)+
+  expand_limits(x=0.75,y=0.5)+
   theme_mine()+
   theme(
     legend.title = element_text(size = 24,face="bold"),
@@ -1415,11 +1430,444 @@ ps_V9_1391f_EukBr_grouped_comp_nmds_weighted<-plot_ordination(ps_V9_1391f_EukBr_
     axis.title.x = element_text(size = 24,face="bold"),
     axis.title.y = element_text(size = 24,face="bold")
   )
-ps_V9_1391f_EukBr_grouped_comp_nmds_weighted$layers
-ps_V9_1391f_EukBr_grouped_comp_nmds_weighted$layers<-ps_V9_1391f_EukBr_grouped_comp_nmds_weighted$layers[-1]
-ps_V9_1391f_EukBr_grouped_comp_nmds_weighted$layers<-ps_V9_1391f_EukBr_grouped_comp_nmds_weighted$layers[-1]
-ps_V9_1391f_EukBr_grouped_comp_nmds_weighted
-#ggsave("Plots/ps_V9_1391f_EukBr_grouped_comp_nmds_weighted.svg",width=400,height=250,units=c("mm"))
+ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted$layers
+ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted$layers<-ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted$layers[-1]
+ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted$layers<-ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted$layers[-1]
+ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted
+#ggsave("Plots/ps_V9_1391f_EukBr_grouped_comp_nmds_nmds_weighted.svg",width=400,height=250,units=c("mm"))
+ggsave("Plots/ps_V9_1391f_EukBr_grouped_comp_nmds_cryo_nmds_weighted.svg",width=400,height=200,units=c("mm"))
+```
+
+Tip glom phylogenetic tree
+
+```{r}
+ps_V9_1391f_EukBr_grouped_comp<-process_ps_18S(ps_V9_1391f_EukBr_grouped,glom="tip",transformation="comp",remove_na=T)
+
+#Phylogenetic tree
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_grouped_comp)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_grouped_comp)
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_grouped_comp))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_grouped_comp) <- tax_fixed_mat
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_grouped_comp), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_grouped_comp)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_grouped_comp), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_grouped_comp))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_grouped_comp)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df$SampleID <- rownames(meta)
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#num_envs<-length(unique(tip_metadata$geo_loc_name))
+#site_palette<-unname(createPalette(num_envs,c("#010101","#ffffff")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=geo_loc_name),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=geo_loc_name),size=4)+
+  scale_colour_manual("Location",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_grouped_comp)
+#metadata<-sample_data(ps_V9_1391f_EukBr_grouped_comp)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_grouped_comp)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_grouped_comp), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_grouped_comp_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_grouped_comp_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_grouped_comp_tree_Family.png",width=400,height=600,units=c("mm"))
+```
+
+Tip glom trebouxio tree
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Trebouxiophyceae
+ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae<-subset_taxa(ps_V9_1391f_EukBr_grouped_comp,Class=="Trebouxiophyceae")
+#Prune phyloseq object to just Trebouxiophyceae
+ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae),ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae) <- tax_fixed_mat
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae))
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df$SampleID <- rownames(meta)
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,env_broad_scale)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,env_broad_scale)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+
+
+# Step 1: Summarize relative abundance per OTU per site
+otu_site_abund <- otu_env %>%
+  group_by(OTU, env_broad_scale) %>%
+  summarise(rel_abund = sum(Abundance), .groups = "drop")
+
+# Step 2: Pivot to wide format (sites as columns)
+otu_site_wide <- otu_site_abund %>%
+  pivot_wider(names_from = env_broad_scale, values_from = rel_abund, values_fill = 0)
+
+# Make sure OTU column is named 'label' to match tree tip labels
+colnames(otu_site_wide)[1] <- "label"
+
+# Step 3: Join the abundance data to your tree tips (if you want to add more tip metadata, join it here too)
+# Assuming your tree object is 'tree'
+
+# Step 4: Plot with pie charts at tips representing relative abundance across sites
+#p <- ggtree(tree) %<+% otu_site_wide + 
+#  geom_tiplab(size=3) + 
+#  geom_fruit(
+#    geom=geom_arc_bar,
+#    aes(fill=..x..),
+#    width=0.1,
+#    offset=0.02
+#  ) +
+#  scale_fill_manual(values = your_site_colors) # set your color palette for sites
+
+
+#num_envs<-length(unique(tip_metadata$geo_loc_name))
+#site_palette<-unname(createPalette(num_envs,c("#010101","#ffffff")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+
+your_site_colors<-unname(createPalette(length(unique(sample_data(ps_V9_1391f_EukBr_grouped_comp)$env_broad_scale)),c("#71c9c1","#ffc385")))
+
+tip_metadata$env_broad_scale <- factor(
+  tip_metadata$env_broad_scale,
+  levels = unique(sample_data(ps_V9_1391f_EukBr_grouped_comp)$env_broad_scale)
+)
+
+# Plot
+#p<-ggtree(tree)%<+%tip_metadata+
+#  geom_tree(size=0.6)+
+#  geom_tiplab(aes(label=TipLabel,color=geo_loc_name),size=4,hjust=-0.1,fontface="bold") +
+#  geom_tippoint(aes(shape=env_medium,color=geo_loc_name),size=4)+
+#  scale_colour_manual("Location",values=site_palette) +
+#  scale_shape_manual("Sample media",values=c(15,16,17))+
+#  xlim(0,max(tree$edge.length)+0.07)+
+#  theme_tree2()+
+#  theme(
+#    legend.title = element_text(size = 24,face="bold"),
+#    legend.text = element_text(size = 18),
+#    legend.key.size = unit(1.2, "cm"),
+#    legend.position = "right",
+#    axis.line.x = element_blank(),
+#    axis.ticks.x = element_blank(),
+#    axis.text.x = element_blank(),
+#    axis.title.x = element_blank()
+#  )
+
+#print(p)
+
+# Merge abundance data with existing tip metadata
+tip_metadata_full <- left_join(tip_metadata, otu_site_wide, by = "label")
+
+#Pivot long abundance data
+otu_site_long <- otu_site_wide %>%
+  pivot_longer(
+    cols = -label,
+    names_to = "variable",
+    values_to = "value"
+  )
+
+# Already glomerated phyloseq object
+otu <- as(otu_table(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae), "matrix")
+if (!taxa_are_rows(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)) {
+  otu <- t(otu)
+}
+meta <- as(sample_data(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae), "data.frame")
+meta$SampleID <- rownames(meta)
+
+# Long format
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("label") %>%
+  pivot_longer(-label, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0) %>%
+  left_join(meta, by = "SampleID")
+
+# Sum abundance per OTU x env_broad_scale
+otu_site_long <- otu_long %>%
+  group_by(label, env_broad_scale) %>%
+  summarise(rel_abund = sum(Abundance), .groups = "drop")
+
+otu_site_long_2 <- otu_site_wide %>%
+  pivot_longer(-label, names_to = "env_broad_scale", values_to = "abundance") %>%
+  filter(abundance > 0)
+
+# Use ggtreeExtra to build the base tree and add pies from abundance data
+pie_data <- otu_site_long_2 %>%
+  rename(label = label, fill = env_broad_scale, value = abundance)
+
+# Plot tree with pie charts at tips
+p <- ggtree(tree) %<+% tip_metadata +
+  geom_tree(size = 0.6) +
+  geom_tiplab(aes(label = TipLabel), size = 4, hjust = -0.1, fontface = "bold") +
+  xlim(0, max(tree$edge.length) + 0.2) +
+  theme_tree2() +
+  theme(
+    legend.title = element_text(size = 24, face = "bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  ) +
+  geom_fruit(
+    data = otu_site_long_2,
+    geom = geom_arc_bar,
+    mapping = aes(x = 1, fill = env_broad_scale, r0 = 0, r = abundance),
+    stat = "identity",
+    offset = 0.04,
+    width = 0.02
+  ) +
+  scale_fill_manual(values = your_site_colors, name = "Site")
+
+print(p)
+
+#p <- ggtree(tree) +
+#  geom_tree(size = 0.6) +
+#  geom_fruit(
+#    data = otu_site_long,
+#    geom = geom_bar,
+#    mapping = aes(x = rel_abund, fill = env_broad_scale),
+#    stat = "identity",
+#    orientation = "y",
+#    width = 0.4,
+#    offset = 0.02
+#  ) +
+#  scale_fill_manual(values = site_palette, name = "Site") +
+#  theme(legend.position = "right")
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)
+#metadata<-sample_data(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_grouped_comp_Trebouxiophyceae_tree_Family_2.png",width=400,height=600,units=c("mm"))
 ```
 
 Phylogenetic tree of Trebouxiophyceae
@@ -1497,8 +1945,9 @@ tax <- tax %>%
 # Add TipLabel fallback logic
 tax <- tax %>%
   mutate(
-    TipLabelRaw = coalesce(Genus, Family, Order, Class, Division, Supergroup),
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
     TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
       !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
       !is.na(Family) ~ paste0("Family: ", Family),
       !is.na(Order) ~ paste0("Order: ", Order),
@@ -1586,6 +2035,343 @@ print(p)
 #Save plot
 #ggsave("plots/ps_V9_1391f_EukBr_Trebouxiophyceae_tree_Family.svg",width=400,height=250,units=c("mm"))
 #ggsave("plots/ps_V9_1391f_EukBr_Trebouxiophyceae_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Trebouxiophyceae_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Chrysophyceae tree
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Chrysophyceae
+ps_V9_1391f_EukBr_Chrysophyceae<-subset_taxa(ps_V9_1391f_EukBr,Class=="Chrysophyceae")
+#Prune phyloseq object to just Chrysophyceae
+ps_V9_1391f_EukBr_Chrysophyceae<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Chrysophyceae),ps_V9_1391f_EukBr_Chrysophyceae)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Chrysophyceae)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Chrysophyceae)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Chrysophyceae))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Chrysophyceae) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Chrysophyceae), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Chrysophyceae)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Chrysophyceae), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Chrysophyceae))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Chrysophyceae)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Chrysophyceae)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Chrysophyceae)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Chrysophyceae)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Chrysophyceae), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Chrysophyceae_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Chrysophyceae_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Chrysophyceae_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Xanthophyceae tree
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Xanthophyceae
+ps_V9_1391f_EukBr_Xanthophyceae<-subset_taxa(ps_V9_1391f_EukBr,Class=="Xanthophyceae")
+#Prune phyloseq object to just Xanthophyceae
+ps_V9_1391f_EukBr_Xanthophyceae<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Xanthophyceae),ps_V9_1391f_EukBr_Xanthophyceae)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Xanthophyceae)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Xanthophyceae)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Xanthophyceae))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Xanthophyceae) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Xanthophyceae), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Xanthophyceae)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Xanthophyceae), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Xanthophyceae))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Xanthophyceae)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Xanthophyceae)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Xanthophyceae)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Xanthophyceae)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Xanthophyceae), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Xanthophyceae_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Xanthophyceae_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Xanthophyceae_tree_Family.png",width=400,height=250,units=c("mm"))
 ```
 
 Phylogenetic tree of Spirotrichea
@@ -1663,8 +2449,9 @@ tax <- tax %>%
 # Add TipLabel fallback logic
 tax <- tax %>%
   mutate(
-    TipLabelRaw = coalesce(Genus, Family, Order, Class, Division, Supergroup),
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
     TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
       !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
       !is.na(Family) ~ paste0("Family: ", Family),
       !is.na(Order) ~ paste0("Order: ", Order),
@@ -1689,7 +2476,7 @@ otu_env <- left_join(otu_long, meta_df, by = "SampleID")
 
 # Get dominant environment for each OTU
 otu_env_summary<-otu_env%>%
-  group_by(OTU,geo_loc_name,env_medium,env_broad_scale)%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
   summarise(n=n(),.groups="drop")%>%
   group_by(OTU) %>%
   slice_max(n,with_ties=FALSE)
@@ -1704,20 +2491,20 @@ tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c
 # Create metadata frame for ggtree
 tip_metadata<-tip_metadata %>%
   rename(label=OTU) %>%
-  select(label,geo_loc_name,env_medium,TipLabel,env_broad_scale)
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
 
 rownames(tip_metadata) <- tip_metadata$label
 
-#num_envs<-length(unique(tip_metadata$geo_loc_name))
-#site_palette<-unname(createPalette(num_envs,c("#010101","#ffffff")))
-site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
 
 # Plot
 p<-ggtree(tree)%<+%tip_metadata+
   geom_tree(size=0.6)+
-  geom_tiplab(aes(label=env_broad_scale,color=geo_loc_name),size=4,hjust=-0.1,fontface="bold") +
-  geom_tippoint(aes(shape=env_medium,color=geo_loc_name),size=4)+
-  scale_colour_manual("Location",values=site_palette) +
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
   scale_shape_manual("Sample media",values=c(15,16,17))+
   xlim(0,max(tree$edge.length)+0.07)+
   theme_tree2()+
@@ -1750,6 +2537,1302 @@ print(p)
 print(p)
 
 #Save plot
-ggsave("plots/ps_V9_1391f_EukBr_Spirotrichea_tree_Family.svg",width=400,height=250,units=c("mm"))
-ggsave("plots/ps_V9_1391f_EukBr_Spirotrichea_tree_Family.pdf",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Spirotrichea_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Spirotrichea_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Spirotrichea_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Telonemia_XX
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Telonemia_XX
+ps_V9_1391f_EukBr_Telonemia_XX<-subset_taxa(ps_V9_1391f_EukBr,Class=="Telonemia_XX")
+#Prune phyloseq object to just Telonemia_XX
+ps_V9_1391f_EukBr_Telonemia_XX<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Telonemia_XX),ps_V9_1391f_EukBr_Telonemia_XX)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Telonemia_XX)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Telonemia_XX)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Telonemia_XX))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Telonemia_XX) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Telonemia_XX), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Telonemia_XX)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Telonemia_XX), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Telonemia_XX))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Telonemia_XX)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Telonemia_XX)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Telonemia_XX)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Telonemia_XX)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Telonemia_XX), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Telonemia_XX_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Telonemia_XX_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Telonemia_XX_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Mamiellophyceae
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Mamiellophyceae
+ps_V9_1391f_EukBr_Mamiellophyceae<-subset_taxa(ps_V9_1391f_EukBr,Class=="Mamiellophyceae")
+#Prune phyloseq object to just Mamiellophyceae
+ps_V9_1391f_EukBr_Mamiellophyceae<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Mamiellophyceae),ps_V9_1391f_EukBr_Mamiellophyceae)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Mamiellophyceae)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Mamiellophyceae)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Mamiellophyceae))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Mamiellophyceae) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Mamiellophyceae), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Mamiellophyceae)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Mamiellophyceae), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Mamiellophyceae))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Mamiellophyceae)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Mamiellophyceae)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Mamiellophyceae)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Mamiellophyceae)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Mamiellophyceae), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Mamiellophyceae_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Mamiellophyceae_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Mamiellophyceae_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Filosa-Granofilosea
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Filosa-Granofilosea
+ps_V9_1391f_EukBr_Filosa_Granofilosea<-subset_taxa(ps_V9_1391f_EukBr,Class=="Filosa-Granofilosea")
+#Prune phyloseq object to just Filosa-Granofilosea
+ps_V9_1391f_EukBr_Filosa_Granofilosea<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Filosa_Granofilosea),ps_V9_1391f_EukBr_Filosa_Granofilosea)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Filosa_Granofilosea)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Filosa_Granofilosea)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Filosa_Granofilosea))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Filosa_Granofilosea) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Filosa_Granofilosea), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Filosa_Granofilosea)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Filosa_Granofilosea), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Filosa_Granofilosea))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Filosa_Granofilosea)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Filosa_Granofilosea)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Filosa_Granofilosea)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Filosa_Granofilosea)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Filosa_Granofilosea), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Filosa_Granofilosea_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Filosa_Granofilosea_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Filosa_Granofilosea_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Cryptophyceae:nucl
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Cryptophyceae:nucl
+ps_V9_1391f_EukBr_Cryptophyceae_nucl<-subset_taxa(ps_V9_1391f_EukBr,Class=="Cryptophyceae:nucl")
+#Prune phyloseq object to just Cryptophyceae:nucl
+ps_V9_1391f_EukBr_Cryptophyceae_nucl<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Cryptophyceae_nucl),ps_V9_1391f_EukBr_Cryptophyceae_nucl)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Cryptophyceae_nucl)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Cryptophyceae_nucl)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Cryptophyceae_nucl))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Cryptophyceae_nucl) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Cryptophyceae_nucl), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Cryptophyceae_nucl)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Cryptophyceae_nucl), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Cryptophyceae_nucl))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Cryptophyceae_nucl)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Cryptophyceae_nucl)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Cryptophyceae_nucl)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Cryptophyceae_nucl)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Cryptophyceae_nucl), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Cryptophyceae_nucl_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Cryptophyceae_nucl_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Cryptophyceae_nucl_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Chlorophyceae
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Chlorophyceae
+ps_V9_1391f_EukBr_Chlorophyceae<-subset_taxa(ps_V9_1391f_EukBr,Class=="Chlorophyceae")
+#Prune phyloseq object to just Chlorophyceae
+ps_V9_1391f_EukBr_Chlorophyceae<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Chlorophyceae),ps_V9_1391f_EukBr_Chlorophyceae)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Chlorophyceae)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Chlorophyceae)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Chlorophyceae))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Chlorophyceae) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Chlorophyceae), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Chlorophyceae)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Chlorophyceae), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Chlorophyceae))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Chlorophyceae)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Chlorophyceae)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Chlorophyceae)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Chlorophyceae)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Chlorophyceae), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Chlorophyceae_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Chlorophyceae_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Chlorophyceae_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Bacillariophyceae
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Bacillariophyceae
+ps_V9_1391f_EukBr_Bacillariophyceae<-subset_taxa(ps_V9_1391f_EukBr,Class=="Bacillariophyceae")
+#Prune phyloseq object to just Bacillariophyceae
+ps_V9_1391f_EukBr_Bacillariophyceae<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Bacillariophyceae),ps_V9_1391f_EukBr_Bacillariophyceae)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Bacillariophyceae)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Bacillariophyceae)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Bacillariophyceae))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Bacillariophyceae) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Bacillariophyceae), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Bacillariophyceae)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Bacillariophyceae), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Bacillariophyceae))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Bacillariophyceae)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Bacillariophyceae)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Bacillariophyceae)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Bacillariophyceae)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Bacillariophyceae), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Bacillariophyceae_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Bacillariophyceae_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Bacillariophyceae_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Tardigrada
+
+```{r}
+#Phylogenetic tree
+#Subset to relevant group: Tardigrada
+ps_V9_1391f_EukBr_Tardigrada<-subset_taxa(ps_V9_1391f_EukBr,Class=="Tardigrada")
+#Prune phyloseq object to just Tardigrada
+ps_V9_1391f_EukBr_Tardigrada<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_Tardigrada),ps_V9_1391f_EukBr_Tardigrada)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_Tardigrada)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_Tardigrada)
+
+
+#Extract taxonomy table
+tax<-as.data.frame(tax_table(ps_V9_1391f_EukBr_Tardigrada))
+tax$OTU<-rownames(tax)
+unresolved_taxa<-is.na(tax[,"Family"])
+#Count number of unresolved asvs
+num_unresolved<-sum(unresolved_taxa)
+cat("Number of ASVs not resolved to family level:",num_unresolved,"\n")
+#Make a copy to edit
+tax_fixed<-tax
+#Make a new pseudo-class called 'Unresolved', and apply it to higher taxonomic levels
+tax_fixed[unresolved_taxa,"Genus"]<-"Unresolved"
+tax_fixed[unresolved_taxa,"Family"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Order"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Class"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Subdivision"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Division"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Supergroup"]<-"Unresolved"
+#tax_fixed[unresolved_taxa,"Domain"]<-"Unresolved"
+
+# Convert edited taxonomy table back to matrix
+tax_fixed_mat <- as.matrix(tax_fixed[, -which(names(tax_fixed) == "OTU")])
+rownames(tax_fixed_mat) <- tax_fixed$OTU
+# Replace taxonomy table in the phyloseq object
+tax_table(ps_V9_1391f_EukBr_Tardigrada) <- tax_fixed_mat
+
+
+
+otu <- as(otu_table(ps_V9_1391f_EukBr_Tardigrada), "matrix")
+
+# If OTUs are in columns, transpose to make OTUs the rows
+if (!taxa_are_rows(ps_V9_1391f_EukBr_Tardigrada)) {
+  otu <- t(otu)
+}
+
+# At this point, rows = OTUs/ASVs, columns = Samples
+meta <- as(sample_data(ps_V9_1391f_EukBr_Tardigrada), "data.frame")
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_Tardigrada))
+
+#Add fallback logic
+# Create a new column "TipLabel" that uses Genus if available, else Family
+#tax$Genus[is.na(tax$Genus)] <- NA  # ensure proper NA handling
+# You can also treat "Unresolved" as NA if needed
+#tax$Genus[tax$Genus == "Unresolved"] <- NA
+# Now build the fallback label
+#tax$TipLabel <- ifelse(!is.na(tax$Genus), 
+#                       as.character(tax$Genus),
+#                       ifelse(!is.na(tax$Family), 
+#                              paste0("Family: ", tax$Family), 
+#                              "Unresolved"))
+# Add OTU as a column for joining later
+#tax$OTU <- rownames(tax)
+
+
+#Fallback logic full
+# Treat "Unresolved" as NA
+tax <- tax %>%
+  mutate(across(c(Genus, Family, Order, Class, Division, Supergroup),
+                ~na_if(., "Unresolved")))
+# Add TipLabel fallback logic
+tax <- tax %>%
+  mutate(
+    TipLabelRaw = coalesce(Species, Genus, Family, Order, Class, Division, Supergroup),
+    TipLabel = case_when(
+      !is.na(Species) ~ paste0(Species, " (",Family,")"),
+      !is.na(Genus) ~ paste0(Genus, " (",Family,")"),
+      !is.na(Family) ~ paste0("Family: ", Family),
+      !is.na(Order) ~ paste0("Order: ", Order),
+      !is.na(Class) ~ paste0("Class: ", Class),
+      !is.na(Division) ~ paste0("Division: ", Division),
+      !is.na(Supergroup) ~ paste0("Supergroup: ", Supergroup),
+      TRUE ~ "Unresolved"
+    )
+  )
+tax$OTU <- rownames(tax)
+
+tree <- phy_tree(ps_V9_1391f_EukBr_Tardigrada)
+
+otu_long <- as.data.frame(otu) %>%
+  rownames_to_column("OTU") %>%
+  pivot_longer(-OTU, names_to = "SampleID", values_to = "Abundance") %>%
+  filter(Abundance > 0)
+
+# Add env_broad_scale to each observation
+meta_df <- meta %>% rownames_to_column("SampleID")
+otu_env <- left_join(otu_long, meta_df, by = "SampleID")
+
+# Get dominant environment for each OTU
+otu_env_summary<-otu_env%>%
+  group_by(OTU,geo_loc_name,env_medium,RepGroup)%>%
+  summarise(n=n(),.groups="drop")%>%
+  group_by(OTU) %>%
+  slice_max(n,with_ties=FALSE)
+
+# Add Family info
+otu_env_summary$Family<-tax[otu_env_summary$OTU,"Family"]
+otu_env_summary$Family[is.na(otu_env_summary$Family)]<-"Unresolved"
+
+# Join fallback TipLabel to the OTU metadata
+tip_metadata <- left_join(otu_env_summary, tax %>% select(OTU, TipLabel), by = c("OTU" = "OTU"))
+
+# Create metadata frame for ggtree
+tip_metadata<-tip_metadata %>%
+  rename(label=OTU) %>%
+  select(label,geo_loc_name,env_medium,TipLabel,RepGroup)
+
+rownames(tip_metadata) <- tip_metadata$label
+
+#site_palette<-unname(createPalette(length(unique(tip_metadata$geo_loc_name)),c("#71c9c1","#ffc385")))
+site_palette<-unname(createPalette(length(unique(tip_metadata$RepGroup)),c("#71c9c1","#ffc385")))
+
+
+# Plot
+p<-ggtree(tree)%<+%tip_metadata+
+  geom_tree(size=0.6)+
+  geom_tiplab(aes(label=TipLabel,color=RepGroup),size=4,hjust=-0.1,fontface="bold") +
+  geom_tippoint(aes(shape=env_medium,color=RepGroup),size=4)+
+  scale_colour_manual("Site",values=site_palette) +
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  xlim(0,max(tree$edge.length)+0.07)+
+  theme_tree2()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    legend.position = "right",
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+print(p)
+
+#tree<-phy_tree(ps_V9_1391f_EukBr_Tardigrada)
+#metadata<-sample_data(ps_V9_1391f_EukBr_Tardigrada)
+#taxa_table<-tax_table(ps_V9_1391f_EukBr_Tardigrada)
+#site_data<-data.frame(taxa_table)
+#site_data <- metadata$env_broad_scale
+#tree$tip.label <- site_data[match(tree$tip.label, rownames(sam_data))]
+#site_data$sample_sites <- apply(otu_table(ps_V9_1391f_EukBr_Tardigrada), 1, function(x) paste(names(which(x > 0)), collapse = ","))
+#tree$tip.label <- site_data$sample_sites
+
+#p <- ggtree(tree) %<+% metadata +
+#     geom_tiplab(aes(color = env_broad_scale), size = 2) +
+#     scale_colour_manual("Location",values=site_palette_2)
+
+print(p)
+
+#Save plot
+#ggsave("plots/ps_V9_1391f_EukBr_Tardigrada_tree_Family.svg",width=400,height=250,units=c("mm"))
+#ggsave("plots/ps_V9_1391f_EukBr_Tardigrada_tree_Family.pdf",width=400,height=250,units=c("mm"))
+ggsave("plots/ps_V9_1391f_EukBr_Tardigrada_tree_Family.png",width=400,height=250,units=c("mm"))
+```
+
+Trebouxiophyceae NMDS
+
+```{r}
+#Subset to relevant group: Trebouxiophyceae
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae<-subset_taxa(ps_V9_1391f_EukBr_grouped,Class=="Trebouxiophyceae")
+# Check sample sums
+sample_sums <- sample_sums(ps_V9_1391f_EukBr_grouped_comp_nmds)
+nonzero_samples <- names(sample_sums[sample_sums > 0])
+# Prune to only non-zero samples
+ps_V9_1391f_EukBr_grouped_comp_nmds <- prune_samples(nonzero_samples, ps_V9_1391f_EukBr_grouped_comp_nmds)
+#Prune phyloseq object to just Trebouxiophyceae
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae<-prune_taxa(taxa_names(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae),ps_V9_1391f_EukBr_grouped_Trebouxiophyceae)
+#Check number of taxa
+ntaxa(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae)
+#Check number of tips
+phy_tree(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae)
+
+#NMDS
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds<-microbiome::transform(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae,"compositional")
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_melt<-psmelt(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds)
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_melt<-prune_0(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_melt)
+#Reordering
+#Reordering
+reordering_df<-ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_melt
+#reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney_East_18","Bonney_East_22","Joyce_25","Joyce_27","Joyce_37","Vanda_63","Vanda_66","Vanda_71","CAN47","CAN61","CAN64","CAN75","CAN81","CAN87","CAN101","CAN102","CAN111","TAY18","TAY19","TAY29","TAY38","TAY40","TAY42","TAY44","COM7","COM54","COM55","COM57","COM58","COM62","COM65","COM80","COM81","DGC4","Ust4","MVCS3","MVC4","MVC5","MVC6","MVC7","LWC1","LWC2","LWC3","LWC4","LWC5","LKGC1","LKGC2","LKGC3","LKGC4","LKGC5","KSC13","KSC14","KSC16","KSC17","KSC23","KSC33","SX","SY","SZ","SvA","SvB","SvC","SvE","IM1","IM2","IM3","IM4","IC1","IC2","GrC8","GrC11","GrE8")
+reordering_df$RepGroup<-fct_relevel(reordering_df$RepGroup,"Bonney East 18m","Bonney East 22m","Joyce 25m","Joyce 27m","Joyce 37m","Vanda 63m","Vanda 66m","Vanda 71m","Canada Glacier","Taylor Glacier","Commonwealth Glacier","Diamond Glacier","Utsteinen Nunatak","Miers Glacier","Lower Wright Glacier","Lower Koettlitz Glacier","Upper Koettlitz Glacier","Storglaciaren Glacier","Midtre Lovenbreen Glacier","Greenland Ice Margin Glacier","Greenland Ice Core Glacier","Kangerlussuaq Glacier")
+reordering_df$env_broad_scale<-fct_relevel(reordering_df$env_broad_scale,"Lake_Bonney_East","Lake_Joyce","Lake_Vanda","Canada_glacier","Taylor_glacier","Commonwealth_glacier","Diamond_glacier","Utsteinen_nunatak","Miers_glacier","Lower_Wright_glacier","Lower_Koettlitz_glacier","Upper_Koettlitz_glacier","Storglaciaren","Midtre_Lovenbreen_glacier","Greenland_Ice_margin_glacier","Greenland_Ice_core_glacier","Kangerlussuaq_glacier")
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_melt<-reordering_df
+
+#colour palette
+site_palette<-unname(createPalette(length(unique(reordering_df$geo_loc_name)),c("#71c9c1","#ffc385")))
+
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds <- prune_samples(
+  sample_sums(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds) > 0,
+  ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds
+)
+
+#Ordination
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_ord_weighted<-ordinate(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds,"NMDS","bray")
+#Stress: 0.1589103
+#ANOSIMs
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_site_group=get_variable(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds, "env_broad_scale")
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_site_anosim=anosim(distance(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds, "bray"), ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_site_group)
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_site_anosim
+#ANOSIM: Stress = 0.1646433, ANOSIM R-Stat 0.8202, p value = 0.001
+#250609: ANOSIM: Stress = 0.122388, ANOSIM R-Stat 0.7351, p value = 0.001
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_loc_group=get_variable(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds, "geo_loc_name")
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_loc_anosim=anosim(distance(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds, "bray"), ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_loc_group)
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_loc_anosim
+#ANOSIM: Stress = 0.1646433, ANOSIM R-Stat 0.3808, p value = 0.001
+#250609: Stress = 0.122388, ANOSIM R-Stat 0.3566, p value = 0.007
+
+
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_dataframe<-as.data.frame(sample_data(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds))
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted<-plot_ordination(ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds,ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_ord_weighted,type="samples",
+                                      color="geo_loc_name",label="RepGroup",shape="env_medium")+
+  ggtitle("Stress = 0.122388, ANOSIM R-Stat 0.7351, p value = 0.001")+
+  scale_colour_manual("Location",values=site_palette)+
+  scale_shape_manual("Sample media",values=c(15,16,17))+
+  geom_point(size=4,alpha=0.8)+
+  geom_text_repel(mapping=aes(x=NMDS1,y=NMDS2,label=RepGroup,fontface="bold"),inherit.aes=F,,size = 3,vjust=0,nudge_y=0.04,max.overlaps=100)+
+  #geom_mark_hull(aes(fill=geo_loc_name,colour=geo_loc_name),show.legend=F)+
+  expand_limits(x=0.75,y=0.5)+
+  theme_mine()+
+  theme(
+    legend.title = element_text(size = 24,face="bold"),
+    legend.text = element_text(size = 18),
+    legend.key.size = unit(1.2, "cm"),
+    axis.title.x = element_text(size = 24,face="bold"),
+    axis.title.y = element_text(size = 24,face="bold")
+  )
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted$layers
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted$layers<-ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted$layers[-1]
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted$layers<-ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted$layers[-1]
+ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted
+#ggsave("Plots/ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_nmds_weighted.svg",width=400,height=250,units=c("mm"))
+ggsave("Plots/ps_V9_1391f_EukBr_grouped_Trebouxiophyceae_comp_nmds_cryo_nmds_weighted.svg",width=400,height=200,units=c("mm"))
+```
+
+Indicator species
+
+```{r}
+#extract otu table
+otu <- as.data.frame(otu_table(ps_V9_1391f_EukBr_grouped))
+# If OTUs are in rows, transpose to make OTUs the columns
+if (taxa_are_rows(ps_V9_1391f_EukBr_grouped)) {
+  otu <- t(otu)
+}
+
+#extract metadata
+meta <- as.data.frame(sample_data(ps_V9_1391f_EukBr_grouped))
+
+#extract taxonomy
+tax <- as.data.frame(tax_table(ps_V9_1391f_EukBr_grouped))
+
+#set grouping variable
+group<-meta$geo_loc_name
+group<-as.factor(group)
+
+#set seed for reproducibility
+set.seed(123)
+#run indicator analysis with multipatt
+indval<-multipatt(otu,group,func="IndVal.g",control=how(nperm=999))
+
+#View results
+summary(indval)
+
+#full results table
+indval$sign
+
+#add rownames as column for merging
+significant_asvs <- indval$sign
+significant_asvs$ASV <- rownames(significant_asvs)
+
+#merge with taxonomy
+sign_tax <- merge(significant_asvs, tax, by.x = "ASV", by.y = "row.names", all.x = TRUE)
+
 ```
